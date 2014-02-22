@@ -28,6 +28,7 @@ class Game
     Window* mainWindow;
     /// The status window
     Window* statusWindow;
+    void initGLEW();
   public:
     /// Creates a game instance and initialises all variables.
     Game();
