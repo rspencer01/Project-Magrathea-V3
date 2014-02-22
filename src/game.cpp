@@ -8,11 +8,36 @@
 Game::Game()
 {
   logi.log("New game");
+  logi.log("Initialising Graphics");
+  initGraphics();
+}
+
+void Game::initGraphics()
+{
+  // Initialise GLFW
+  if (!glfwInit())
+    DIE("glfwInit failed");
+  int numMonitors;
+  GLFWmonitor** monitors = glfwGetMonitors(&numMonitors);
+  // Construct window
+  mainWindow = glfwCreateWindow(640, 480, "Hello World", monitors[numMonitors-1], NULL);
+  if (!mainWindow)
+  {
+    glfwTerminate();
+    DIE("Window construction failed");
+  }
+  // Make context
+  glfwMakeContextCurrent(mainWindow);
 }
 
 /// Run the game
 void Game::run()
 {
   logi.log("Running game...");
-  while (1);
+  while (!glfwWindowShouldClose(mainWindow))
+  {
+    glfwSwapBuffers(mainWindow);
+    glfwPollEvents();
+  }
+  glfwTerminate();
 }

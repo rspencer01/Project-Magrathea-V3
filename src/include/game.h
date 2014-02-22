@@ -17,6 +17,11 @@
 /// It handles the render sequence (shadows) and all interactions with the user go through here.
 class Game
 {
+  private:
+    /// Initialises OpenGL and the window
+    void initGraphics();
+    /// The handle of the main window;
+    GLFWwindow* mainWindow;
   public:
     /// Creates a game instance and initialises all variables.
     Game();
