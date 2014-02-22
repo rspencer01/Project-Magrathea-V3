@@ -21,6 +21,9 @@ class Game
   private:
     /// Initialises OpenGL and the window
     void initGraphics();
+    /// Renders the status window
+    void renderStatusWindow();
+    void renderMainWindow();
     /// The main window;
     Window* mainWindow;
     /// The status window

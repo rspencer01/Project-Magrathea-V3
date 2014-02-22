@@ -10,9 +10,11 @@ class Window
     int width;
     int height;
   public:
-    Window(bool fullScreen);
+    Window(Game* game,bool fullScreen);
+    ~Window();
     int shouldClose();
     void setContext();
     void swapBuffers();
+    void setKeyCallBack(GLFWkeyfun func);
 };
 #endif
