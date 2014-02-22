@@ -22,6 +22,8 @@ class Game
     void initGraphics();
     /// The handle of the main window;
     GLFWwindow* mainWindow;
+    /// The size of the main window
+    int mainWindowWidth, mainWindowHeight;
   public:
     /// Creates a game instance and initialises all variables.
     Game();

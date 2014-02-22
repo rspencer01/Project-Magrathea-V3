@@ -20,7 +20,8 @@ void Game::initGraphics()
   int numMonitors;
   GLFWmonitor** monitors = glfwGetMonitors(&numMonitors);
   // Construct window
-  mainWindow = glfwCreateWindow(640, 480, "Hello World", monitors[numMonitors-1], NULL);
+  glfwGetMonitorPhysicalSize(monitors[numMonitors-1], &mainWindowWidth, &mainWindowHeight);
+  mainWindow = glfwCreateWindow(mainWindowWidth, mainWindowHeight, "Hello World", monitors[numMonitors-1], NULL);
   if (!mainWindow)
   {
     glfwTerminate();
