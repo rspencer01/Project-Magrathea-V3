@@ -24,7 +24,9 @@ doc/
 *.exe
 
 # MSVC++ stuff
-src/Project Magrathea V2/
+src/Debug
+src/ipch
+src/Project-Magrathea-V3*
 
 # Data
 *.dat
