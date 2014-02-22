@@ -10,6 +10,7 @@
 #define GAMEOPS_H
 
 #include <magrathea.h>
+#include <window.h>
 
 /// The gameops class contains all the methods to do with gameplay
 ///
@@ -20,10 +21,10 @@ class Game
   private:
     /// Initialises OpenGL and the window
     void initGraphics();
-    /// The handle of the main window;
-    GLFWwindow* mainWindow;
-    /// The size of the main window
-    int mainWindowWidth, mainWindowHeight;
+    /// The main window;
+    Window* mainWindow;
+    /// The status window
+    Window* statusWindow;
   public:
     /// Creates a game instance and initialises all variables.
     Game();

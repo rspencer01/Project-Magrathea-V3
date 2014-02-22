@@ -17,27 +17,20 @@ void Game::initGraphics()
   // Initialise GLFW
   if (!glfwInit())
     DIE("glfwInit failed");
-  int numMonitors;
-  GLFWmonitor** monitors = glfwGetMonitors(&numMonitors);
-  // Construct window
-  glfwGetMonitorPhysicalSize(monitors[numMonitors-1], &mainWindowWidth, &mainWindowHeight);
-  mainWindow = glfwCreateWindow(mainWindowWidth, mainWindowHeight, "Hello World", monitors[numMonitors-1], NULL);
-  if (!mainWindow)
-  {
-    glfwTerminate();
-    DIE("Window construction failed");
-  }
-  // Make context
-  glfwMakeContextCurrent(mainWindow);
+  statusWindow = new Window(false);
+  mainWindow = new Window(true);
 }
 
 /// Run the game
 void Game::run()
 {
   logi.log("Running game...");
-  while (!glfwWindowShouldClose(mainWindow))
+  while ((!mainWindow->shouldClose())||(!statusWindow->shouldClose()))
   {
-    glfwSwapBuffers(mainWindow);
+    mainWindow->setContext();
+    mainWindow->swapBuffers();
+    statusWindow->setContext();
+    statusWindow->swapBuffers();
     glfwPollEvents();
   }
   glfwTerminate();
