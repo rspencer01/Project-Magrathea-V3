@@ -25,7 +25,6 @@ class Game
     void renderMainWindow();
     /// The main window;
     Window* mainWindow;
-    void initGLEW();
   public:
     /// Creates a game instance and initialises all variables.
     Game();

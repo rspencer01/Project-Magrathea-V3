@@ -1,4 +1,3 @@
-#include <GL/glew.h>
 #include <game.h>
 #include <log.h>
 #include <text.h>
@@ -28,18 +27,6 @@ Game::Game()
   initGraphics();
 }
 
-void Game::initGLEW()
-{
-  // Initialise glew.  If there is an error, report it
-  glewExperimental=GL_TRUE;
-  GLenum res = glewInit();
-  if (res != GLEW_OK)
-  {
-    DIE2("Could not start GLEW:", glewGetErrorString(res));
-  }
-  glDebugMessageCallbackARB((GLDEBUGPROCARB) glDebugMessageCallbackFunction, NULL); 
-}
-
 void Game::initGraphics()
 {
   glEnable(GL_TEXTURE_2D);
@@ -50,7 +37,14 @@ void Game::initGraphics()
   mainWindow = new Window(this);
   mainWindow->setKeyCallBack(&key_callback);
   mainWindow->setContext();
-  initGLEW();
+  // Initialise glew.  If there is an error, report it
+  glewExperimental=GL_TRUE;
+  GLenum res = glewInit();
+  if (res != GLEW_OK)
+  {
+    DIE2("Could not start GLEW:", glewGetErrorString(res));
+  }
+  glDebugMessageCallbackARB((GLDEBUGPROCARB) glDebugMessageCallbackFunction, NULL); 
   initTextEngine();
 }
 
