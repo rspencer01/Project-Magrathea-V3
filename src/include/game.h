@@ -11,6 +11,9 @@
 
 #include <magrathea.h>
 #include <window.h>
+#include <shaders.h>
+#include <camera.h>
+#include <region.h>
 
 /// The gameops class contains all the methods to do with gameplay
 ///
@@ -25,11 +28,20 @@ class Game
     void renderMainWindow();
     /// The main window;
     Window* mainWindow;
+    /// The main camera
+    Camera* camera;
+    /// A test region
+    Region* r;
+    bool mouseCameraControl;
+    bool keys[256];
   public:
     /// Creates a game instance and initialises all variables.
     Game();
     /// Runs the game
     void run();
+    /// The shader manager
+    ShaderManager* shaderManager;
+    void key(int,int,int,int);
 };
 
 #endif

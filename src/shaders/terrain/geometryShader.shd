@@ -1,0 +1,51 @@
+#version 150
+
+layout(triangles) in;
+layout(triangle_strip) out;
+layout(max_vertices = 40) out;
+
+in vec4 vsColour[];
+in vec2 vsTexcoord[];
+in vec4 vsTexShades[];
+in vec3 vsNormal[];
+in vec3 vsPosition[];
+
+out vec4 gsShadowCoord;
+out vec4 gsColour;
+out vec2 gsTexcoord;
+out vec4 gsTexShades;
+out vec3 gsNormal;
+out vec3 gsPosition;
+out float gsDoTexture;
+
+layout(shared)uniform frameData
+{
+  mat4x4 transformationMatrix;
+  vec4 cameraPos;
+  mat4x4 projectionMatrix;  
+};
+
+layout(shared)uniform objectData
+{
+  mat4x4 objectMatrix;
+  vec4 objectColour; 
+  float shinyness;  
+  // Object type of 1 indicates water
+  int objectType;
+  int isGrassy;
+};
+
+vec4 mapToTexture(vec4 pos)
+{
+ return vec4(pos.xyz * 0.5 /pos.w + 0.5,1);
+} 
+
+void main() 
+{
+  for (int i = 0; i<3 ; i++)
+  {
+    gl_Position = projectionMatrix * transformationMatrix * vec4(vsPosition[i], 1);
+	EmitVertex();
+  }
+  EndPrimitive();
+}

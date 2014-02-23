@@ -17,5 +17,11 @@ class Window
     void swapBuffers();
     void setKeyCallBack(GLFWkeyfun func);
     void setTitle(const char* s);
+    glm::vec2 getSize();
+    glm::vec2 getMousePos();
+    glm::vec2 getMouseCentreOffset();
+    void setMousePos(glm::vec2);
+    void setMouseCentre();
+
 };
 #endif

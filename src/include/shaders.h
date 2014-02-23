@@ -16,10 +16,11 @@
 typedef struct
 {
   glm::mat4 cameraMatrix;
+  glm::vec4 cameraPosition;
   glm::mat4 projectionMatrix;
 } FrameData;
 
-static_assert(sizeof(FrameData) == 32*sizeof(GLfloat),"FrameData wrong size");
+static_assert(sizeof(FrameData) == 36*sizeof(GLfloat),"FrameData wrong size");
 
 class ShaderProgram;
 

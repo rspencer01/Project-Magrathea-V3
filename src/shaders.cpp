@@ -21,11 +21,11 @@ int ShaderManager::newShader(const char* name)
     return shaderNames[std::string(name)];
   logi.log("New Shader \"%s\"",name);
   shaders[numShaders] = new ShaderProgram();
-  char path[80]={0};strcpy(path,"../shaders/");strcat(path,name);strcat(path,"/vertexShader.shd");
+  char path[80]={0};strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/vertexShader.shd");
   shaders[numShaders]->LoadShader(path,GL_VERTEX_SHADER);
-  strcpy(path,"../shaders/");strcat(path,name);strcat(path,"/geometryShader.shd");
+  strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/geometryShader.shd");
   shaders[numShaders]->LoadShader(path,GL_GEOMETRY_SHADER);
-  strcpy(path,"../shaders/");strcat(path,name);strcat(path,"/fragmentShader.shd");
+  strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/fragmentShader.shd");
   shaders[numShaders]->LoadShader(path,GL_FRAGMENT_SHADER);
   shaders[numShaders]->CompileAll();
   shaders[numShaders]->Load();
@@ -61,6 +61,11 @@ void ShaderManager::setFrameData()
 {
   glBindBuffer(GL_UNIFORM_BUFFER, frameDataBO);
   glBufferData(GL_UNIFORM_BUFFER, sizeof(frameData), &frameData, GL_DYNAMIC_DRAW);
+}
+
+ShaderProgram* ShaderManager::getCurrentShader()
+{
+  return shaders[currentShader];
 }
 
 
