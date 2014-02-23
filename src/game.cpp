@@ -31,7 +31,9 @@ Game::Game()
   logi.log("New game");
   logi.log("Initialising Graphics");
   initGraphics();
-  r = new Region(glm::vec3(0,0,0),this);
+  for (int i = 0;i<80;i++)
+    for (int j = 0;j<80;j++)
+      r[i][j] = new Region(glm::vec3(i*REGION_SIZE,0,j*REGION_SIZE),this);
   mouseCameraControl = false;
   currentGame = this;
   for (int i = 0;i<256;i++)keys[i] =false;
@@ -96,7 +98,9 @@ void Game::renderMainWindow()
   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
   camera->Render();
   shaderManager->setFrameData();
-  r->Render();
+  for (int i = 0;i<80;i++)
+    for (int j = 0;j<80;j++)
+      r[i][j]->Render();
 }
 
 void Game::key(int key, int scancode, int action, int mods)

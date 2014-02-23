@@ -16,15 +16,11 @@ layout(shared)uniform frameData
 layout(shared)uniform objectData
 {
   mat4x4 objectMatrix;
-  vec4 objectColour; 
-  float shinyness;  
-  // Object type of 1 indicates water
-  int objectType;
 };
 
 out vec3 vsPosition;
 
 void main()
 {
-  vsPosition = (/*objectMatrix */ vec4(inPosition,1)).xyz;
+  vsPosition = (objectMatrix * vec4(inPosition,1)).xyz;
 }

@@ -31,7 +31,7 @@ class Game
     /// The main camera
     Camera* camera;
     /// A test region
-    Region* r;
+    Region* r[80][80];
     bool mouseCameraControl;
     bool keys[256];
   public:

@@ -8,7 +8,6 @@ Window::Window(Game* game)
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
   windowHandle = glfwCreateWindow(width, height, "Project Magrathea", NULL, NULL);
   glfwSetWindowPos(windowHandle,800,30);
   if (!windowHandle)
