@@ -5,6 +5,7 @@ layout(triangle_strip) out;
 layout(max_vertices = 40) out;
 
 in vec4 tsPosition[];
+out vec4 gsPosition;
 
 layout(shared)uniform frameData
 {
@@ -27,6 +28,7 @@ void main()
 {
   for (int i = 0; i<3 ; i++)
   {
+    gsPosition = tsPosition[i];
     gl_Position = projectionMatrix * transformationMatrix *tsPosition[i];
     EmitVertex();
   }

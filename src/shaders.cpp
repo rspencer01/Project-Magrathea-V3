@@ -204,7 +204,7 @@ void ShaderProgram::Load()
   glUseProgram(ShaderProgramID);
   // Set the uniform samplers
   setInt("shadowTexture",7);
-  setInt("otherTexture",3);
+  setInt("otherTexture",0);
   setInt("waterTexture",4);
 }
 

@@ -1,5 +1,6 @@
 #version 140
 
+in vec4 gsPosition;
 out vec4 FragColor;
 
 layout(shared)uniform frameData
@@ -14,11 +15,13 @@ layout(shared)uniform objectData
 {
   mat4x4 objectMatrix;
 };
-uniform sampler2D shadowTexture;
 uniform sampler2D otherTexture;
-uniform sampler2D waterTexture;
 
 void main()
 { 
-  FragColor = vec4(1);
+  if (gsPosition.y<0.5) FragColor= vec4(0,0,1,1);
+  else if (gsPosition.y<5)
+  FragColor = vec4(200,183,104.0,256)/vec4(256);
+  else
+   FragColor = vec4(texture(otherTexture,(gsPosition.xz)/8000).r,1,texture(otherTexture,(gsPosition.xz)/8000).r,1);
 }
