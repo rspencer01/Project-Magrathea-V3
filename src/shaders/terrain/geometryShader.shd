@@ -4,19 +4,7 @@ layout(triangles) in;
 layout(triangle_strip) out;
 layout(max_vertices = 40) out;
 
-in vec4 vsColour[];
-in vec2 vsTexcoord[];
-in vec4 vsTexShades[];
-in vec3 vsNormal[];
-in vec3 vsPosition[];
-
-out vec4 gsShadowCoord;
-out vec4 gsColour;
-out vec2 gsTexcoord;
-out vec4 gsTexShades;
-out vec3 gsNormal;
-out vec3 gsPosition;
-out float gsDoTexture;
+in vec4 tsPosition[];
 
 layout(shared)uniform frameData
 {
@@ -44,8 +32,8 @@ void main()
 {
   for (int i = 0; i<3 ; i++)
   {
-    gl_Position = projectionMatrix * transformationMatrix * vec4(vsPosition[i], 1);
-	EmitVertex();
+    gl_Position = projectionMatrix * transformationMatrix *tsPosition[i];
+    EmitVertex();
   }
   EndPrimitive();
 }

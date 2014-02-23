@@ -1,8 +1,7 @@
 #version 140
 
-in vec3 gsPosition;
-
 out vec4 FragColor;
+
 layout(shared)uniform frameData
 {
   mat4x4 transformationMatrix;

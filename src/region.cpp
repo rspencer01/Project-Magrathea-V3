@@ -18,26 +18,59 @@ Region::Region(glm::vec3 pos,Game* parent) : Object(pos,parent)
 	logi.log("New region at %d %d",(int)pos.x,(int)pos.z);
   initialiseTriangles();
   freeze();
-  shaderID = game->shaderManager->newShader("terrain",VERTEX_SHADER|GEOMETRY_SHADER|FRAGMENT_SHADER);
+  shaderID = game->shaderManager->newShader("terrain",VERTEX_SHADER|GEOMETRY_SHADER|FRAGMENT_SHADER|TESSELATION_SHADER);
 }
 
 /// Constructs the triangles
 void Region::initialiseTriangles()
 {
-  clearTriangleData(25,16);
-  for (int i=0;i<5;i++)
-    for (int j=0;j<5;j++)
-      addPoint(i*5+j,glm::vec3(0,(float)i,(float)j)*0.1f,glm::vec3(0),1,1,1);
-  for (int i=0;i<4;i++)
-    for (int j=0;j<4;j++)
-    {
-      addTriangle(i*4+j,i*5+j,i*5+j+1,(i+1)*5+j);
-    }
-
-  pushTriangleData();
+  clearTriangleData(6,2);
+  addPoint(0,
+               glm::vec3(0,
+			                   0,
+			                   0),
+                         glm::vec3(1,0,0),
+                         1,1,1);
+  addPoint(1,
+               glm::vec3(0,
+			                   0,
+                         REGION_SIZE),
+                         glm::vec3(1,0,0),
+                         1,1,1);
+  addPoint(2,
+               glm::vec3(REGION_SIZE,
+			                   0,
+			                   REGION_SIZE),
+                         glm::vec3(1,0,0),
+                         1,1,1);
+  addPoint(3,
+               glm::vec3(REGION_SIZE,
+			                   0,
+			                   0),
+                         glm::vec3(1,0,0),
+                         1,1,1);
+  addPoint(4,
+               glm::vec3(0,
+			                   0,
+                         0),
+                         glm::vec3(1,0,0),
+                         1,1,1);
+  addPoint(5,
+               glm::vec3(REGION_SIZE,
+			                   0,
+			                   REGION_SIZE),
+                         glm::vec3(1,0,0),
+                         1,1,1);
+  pushTriangleData(); 
 }
 
 void Region::Render()
 {
-  Object::Render();
+  game->shaderManager->loadShader(shaderID);
+  // Load our transformation matrix etc
+  game->shaderManager->getCurrentShader()->setObjectData(objectBO);
+  // Select this object's texture
+  glBindVertexArray(VAO);
+  glPatchParameteri(GL_PATCH_VERTICES,3);
+  glDrawArrays(GL_PATCHES,0,6);
 }

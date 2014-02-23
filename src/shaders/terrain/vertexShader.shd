@@ -22,10 +22,6 @@ layout(shared)uniform objectData
   int objectType;
 };
 
-out vec4 vsColour;
-out vec2 vsTexcoord;
-out vec4 vsTexShades;
-out vec3 vsNormal;
 out vec3 vsPosition;
 
 void main()

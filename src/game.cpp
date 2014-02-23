@@ -54,11 +54,13 @@ void Game::initGraphics()
     DIE2("Could not start GLEW:", glewGetErrorString(res));
   }
   glDebugMessageCallbackARB((GLDEBUGPROCARB) glDebugMessageCallbackFunction, NULL); 
+  glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+
   initTextEngine();
   shaderManager = new ShaderManager();
   makePerspectiveMatrix(&shaderManager->frameData.projectionMatrix);
   camera = new Camera(&shaderManager->frameData.cameraMatrix,&shaderManager->frameData.cameraPosition);
-  camera->setPosition(glm::vec3(-0.5,0,0));
+  camera->setPosition(glm::vec3(0,5,0));
   oldMousePos = mainWindow->getSize()/2.f;
 }
 

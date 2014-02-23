@@ -17,7 +17,7 @@ class Game;
 
 
 /// The size of a region on a side
-#define REGION_SIZE 0.5
+#define REGION_SIZE 100
 
 /// A region class is a section of terrain covered by a single texture
 ///
