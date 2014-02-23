@@ -16,5 +16,6 @@ class Window
     void setContext();
     void swapBuffers();
     void setKeyCallBack(GLFWkeyfun func);
+    void setTitle(const char* s);
 };
 #endif
