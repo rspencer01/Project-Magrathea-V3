@@ -1,0 +1,32 @@
+#version 410 core
+
+layout (vertices = 3) out;
+
+in vec3 vsPosition[];
+
+out vec3 evaluationpoint_wor[];
+
+layout(shared)uniform frameData
+{
+  mat4x4 transformationMatrix;
+  vec4 cameraPos;
+  mat4x4 projectionMatrix;  
+};
+
+int detailLevel(float dist)
+{
+  return int(clamp(64-dist/3,1,64));
+}
+
+
+void main () 
+{
+  evaluationpoint_wor[gl_InvocationID] = vsPosition[gl_InvocationID];
+  
+  gl_TessLevelInner[0] = detailLevel(length(cameraPos.xz-(vsPosition[0]+vsPosition[1]+vsPosition[2]).xz/3.0));
+  gl_TessLevelOuter[0] = detailLevel(length(cameraPos.xz-(vsPosition[1]+vsPosition[2]).xz/2.0));
+  gl_TessLevelOuter[1] = detailLevel(length(cameraPos.xz-(vsPosition[0]+vsPosition[2]).xz/2.0));
+  gl_TessLevelOuter[2] = detailLevel(length(cameraPos.xz-(vsPosition[1]+vsPosition[0]).xz/2.0));
+}
+
+

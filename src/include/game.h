@@ -13,7 +13,7 @@
 #include <window.h>
 #include <shaders.h>
 #include <camera.h>
-#include <region.h>
+#include <terrain.h>
 
 /// The gameops class contains all the methods to do with gameplay
 ///
@@ -31,7 +31,7 @@ class Game
     /// The main camera
     Camera* camera;
     /// A test region
-    Region* r[80][80];
+    Terrain* terrain;
     bool mouseCameraControl;
     bool keys[256];
   public:
