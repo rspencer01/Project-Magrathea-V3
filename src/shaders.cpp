@@ -15,18 +15,35 @@ ShaderManager::ShaderManager()
   glGenBuffers(1, &frameDataBO);
 }
 
-int ShaderManager::newShader(const char* name)
+int ShaderManager::newShader(const char* name,int types)
 {
   if (shaderNames.count(std::string(name))!=0)
     return shaderNames[std::string(name)];
   logi.log("New Shader \"%s\"",name);
   shaders[numShaders] = new ShaderProgram();
-  char path[80]={0};strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/vertexShader.shd");
-  shaders[numShaders]->LoadShader(path,GL_VERTEX_SHADER);
-  strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/geometryShader.shd");
-  shaders[numShaders]->LoadShader(path,GL_GEOMETRY_SHADER);
-  strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/fragmentShader.shd");
-  shaders[numShaders]->LoadShader(path,GL_FRAGMENT_SHADER);
+  char path[80]={0};
+  if (types&VERTEX_SHADER)
+  {
+    strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/vertexShader.shd");
+    shaders[numShaders]->LoadShader(path,GL_VERTEX_SHADER);
+  }
+  if (types&GEOMETRY_SHADER)
+  {
+    strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/geometryShader.shd");
+    shaders[numShaders]->LoadShader(path,GL_GEOMETRY_SHADER);
+  }
+  if (types&TESSELATION_SHADER)
+  {
+    strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/tesselationControlShader.shd");
+    shaders[numShaders]->LoadShader(path,GL_TESS_CONTROL_SHADER);
+    strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/tesselationEvaluationShader.shd");
+    shaders[numShaders]->LoadShader(path,GL_TESS_EVALUATION_SHADER);
+  }
+  if (types&FRAGMENT_SHADER)
+  {
+    strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/fragmentShader.shd");
+    shaders[numShaders]->LoadShader(path,GL_FRAGMENT_SHADER);
+  }
   shaders[numShaders]->CompileAll();
   shaders[numShaders]->Load();
   shaderNames[std::string(name)] = numShaders;

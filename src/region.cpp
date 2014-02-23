@@ -18,7 +18,7 @@ Region::Region(glm::vec3 pos,Game* parent) : Object(pos,parent)
 	logi.log("New region at %d %d",(int)pos.x,(int)pos.z);
   initialiseTriangles();
   freeze();
-  shaderID = game->shaderManager->newShader("terrain");
+  shaderID = game->shaderManager->newShader("terrain",VERTEX_SHADER|GEOMETRY_SHADER|FRAGMENT_SHADER);
 }
 
 /// Constructs the triangles

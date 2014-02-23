@@ -13,6 +13,11 @@
 #include <map>
 #include <string>
 
+#define VERTEX_SHADER 0x1
+#define GEOMETRY_SHADER 0x2
+#define TESSELATION_SHADER 0x4
+#define FRAGMENT_SHADER 0x8
+
 typedef struct
 {
   glm::mat4 cameraMatrix;
@@ -36,7 +41,7 @@ class ShaderManager
     GLuint frameDataBO;
   public:
     ShaderManager();
-    int newShader(const char* name);
+    int newShader(const char* name,int);
     void loadShader(int);
     ShaderProgram* getCurrentShader();
     ShaderProgram* getShaderById(int);
