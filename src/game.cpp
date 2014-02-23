@@ -2,6 +2,7 @@
 #include <game.h>
 #include <log.h>
 #include <text.h>
+#include <fpscounter.h>
 
 void error_callback(int error, const char* description){loge.log(description);}
 void glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id,
@@ -50,8 +51,6 @@ void Game::initGraphics()
   mainWindow->setKeyCallBack(&key_callback);
   mainWindow->setContext();
   initGLEW();
-
-
   initTextEngine();
 }
 
@@ -61,6 +60,11 @@ void Game::run()
   logi.log("Running game...");
   while ((!mainWindow->shouldClose()))
   {
+    float ms = getFrameDiff();
+    logFrame();
+    float fps = getFrameRate();
+    char buffer[80]; sprintf_s(buffer,"Project Magrathea III (%.2f FPS : %.0fms)",fps,ms*1000);
+    mainWindow->setTitle(buffer);
     glfwPollEvents();
     mainWindow->setContext();
     renderMainWindow();
