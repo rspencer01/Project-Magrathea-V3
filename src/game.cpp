@@ -46,11 +46,9 @@ void Game::initGraphics()
   if (!glfwInit())
     DIE("glfwInit failed");
   glfwSetErrorCallback(error_callback);
-  statusWindow = new Window(this,false);
-  mainWindow = new Window(this,true);
-  statusWindow->setKeyCallBack(&key_callback);
+  mainWindow = new Window(this);
   mainWindow->setKeyCallBack(&key_callback);
-  statusWindow->setContext();
+  mainWindow->setContext();
   initGLEW();
 
 
@@ -61,28 +59,14 @@ void Game::initGraphics()
 void Game::run()
 {
   logi.log("Running game...");
-  while ((!mainWindow->shouldClose())&&(!statusWindow->shouldClose()))
+  while ((!mainWindow->shouldClose()))
   {
     glfwPollEvents();
     mainWindow->setContext();
     renderMainWindow();
     mainWindow->swapBuffers();
-    statusWindow->setContext();
-    renderStatusWindow();
-    statusWindow->swapBuffers();
   }
   glfwTerminate();
-}
-
-void Game::renderStatusWindow()
-{
-  printString(0,0,"   Project Magrathea V3");
-  printString(0,1,"+-------------------------+");
-  for (int i = 2;i<26;i++)
-    printString(0,i,"|                         |");
-  printString(0,26,"+-------------------------+");
-  printString(2,2,"FPS: %.2f",10.5);
-
 }
 
 void Game::renderMainWindow()

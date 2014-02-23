@@ -10,7 +10,7 @@ class Window
     int width;
     int height;
   public:
-    Window(Game* game,bool fullScreen);
+    Window(Game* game);
     ~Window();
     int shouldClose();
     void setContext();
