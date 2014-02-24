@@ -20,7 +20,9 @@ void main () {
   vec3 p1 = gl_TessCoord.y * evaluationpoint_wor[1]; // y is the 2nd corner
   vec3 p2 = gl_TessCoord.z * evaluationpoint_wor[2]; // z is the 3rd corner (ignore when using quads)
   vec3 pos = p0 + p1 + p2;
-  pos.y += texture(otherTexture,(pos.xz)/8000).r*500;
+  pos.y += texture(otherTexture,(pos.xz)/8000).a*1000;
+  if (pos.y<0)
+  	pos.y = 0;
   tsPosition = vec4(pos,1);
   gl_Position = projectionMatrix*transformationMatrix*vec4 (pos, 1.0);
 }

@@ -23,5 +23,5 @@ void main()
   else if (gsPosition.y<5)
   FragColor = vec4(200,183,104.0,256)/vec4(256);
   else
-   FragColor = vec4(texture(otherTexture,(gsPosition.xz)/8000).r,1,texture(otherTexture,(gsPosition.xz)/8000).r,1);
+   FragColor = vec4(texture(otherTexture,(gsPosition.xz)/8000).r,1,texture(otherTexture,(gsPosition.xz)/8000).a,1);
 }
