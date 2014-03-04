@@ -12,6 +12,7 @@ layout(shared)uniform frameData
 };
 
 out vec4 tsPosition; 
+out vec3 tsNormal;
 // gl_TessCoord is location within the patch
 // (barycentric for triangles, UV for quads)
 uniform sampler2D otherTexture;
@@ -21,6 +22,7 @@ void main () {
   vec3 p2 = gl_TessCoord.z * evaluationpoint_wor[2]; // z is the 3rd corner (ignore when using quads)
   vec3 pos = p0 + p1 + p2;
   pos.y += texture(otherTexture,(pos.xz)/8000).a*1000;
+  tsNormal = texture(otherTexture,(pos.xz)/8000).xyz;
   if (pos.y<0)
   	pos.y = 0;
   tsPosition = vec4(pos,1);

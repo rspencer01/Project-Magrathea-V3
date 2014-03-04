@@ -6,6 +6,7 @@
 #include <images.h>
 #include <smallFern.h>
 #include <heightmap.h>
+#include <cmath>
 #include <stdlib.h>
 
 GLuint texture = 0;
@@ -84,13 +85,13 @@ void Terrain::Render()
 
 GLuint Terrain::makeTexture()
 {
-  srand(0);
-  GLuint texNumber = newTexture(false);
+  srand(1);
+  GLuint texNumber = newTexture(true);
   int width = 4097;
   int height = 4097;
   float* heights = new float[width*height];
   for (int i=0;i<(width)*(height);i++) heights[i] = 0;
-  heights[0] = 0;
+  heights[0] = 0.1;
   heights[width-1] = 0;
   heights[(height-1)*(width)] = 0;
   heights[(height-1)*(width)+height-1] = 0;
@@ -107,25 +108,36 @@ GLuint Terrain::makeTexture()
         float c = heights[(i+sz)*width+j];
         float d = heights[(i+sz)*width+j+sz];
 
-        float hvar = 1.f/200.f;
-        heights[(i+sz/2)*width+(j+sz/2)] = (a+b+c+d)/4 + count*hvar * (rand()%100-50)/100.f ;
-        heights[(i+sz/2)*width+(j)] = (a+c)/2 + count*hvar * (rand()%100-50)/100.f;
-        heights[(i)*width+(j+sz/2)] = (a+b)/2 + count*hvar * (rand()%100-50)/100.f;
-        heights[(i+sz/2)*width+(j+sz)] = (b+d)/2 + count*hvar * (rand()%100-50)/100.f;
-        heights[(i+sz)*width+(j+sz/2)] = (c+d)/2 + count*hvar * (rand()%100-50)/100.f;
+        float hvar = 1.f/1200.f;
+        heights[(i+sz/2)*width+(j+sz/2)] = (a+b+c+d)/4 + sz*hvar * (rand()%100-50)/100.f ;
+        heights[(i+sz/2)*width+(j)] = (a+c)/2 + sz*hvar * (rand()%100-50)/100.f;
+        heights[(i)*width+(j+sz/2)] = (a+b)/2 + sz*hvar * (rand()%100-50)/100.f;
+        heights[(i+sz/2)*width+(j+sz)] = (b+d)/2 + sz*hvar * (rand()%100-50)/100.f;
+        heights[(i+sz)*width+(j+sz/2)] = (c+d)/2 + sz*hvar * (rand()%100-50)/100.f;
 
       }
     sz /= 2;
     count--;
   }
-
+  for (int i = 0;i<width;i++)
+    for (int j = 0; j<height;j++)
+      heights[i*width+j] = pow(std::abs((double)heights[i*width+j]),1.5)*0.7;
   float* rgbaData = new float[width*height*4];
   for (int i = 0;i<width;i++)
     for (int j = 0; j<height;j++)
     {
-      rgbaData[4*(i*width+j)] = 0;
-      rgbaData[4*(i*width+j)+1] = 0;
-      rgbaData[4*(i*width+j)+2] = 0;
+      if (i>0&&j>0&&i<width-1&&j<height-1)
+      {
+        glm::vec3 norm = -glm::normalize(glm::cross(glm::vec3(-1,(heights[i*width+j]-heights[(i-1)*width+j])*1000,0),
+                                                    glm::vec3(0,(heights[i*width+j]-heights[i*width+j-1])*1000,-1))+
+                                         glm::cross(glm::vec3(0,(heights[i*width+j]-heights[(i)*width+j+1])*1000,1),
+                                                    glm::vec3(-1,(heights[i*width+j]-heights[(i-1)*width+j+1])*1000,1))+
+                                         glm::cross(glm::vec3(1,(heights[i*width+j]-heights[(i+1)*width+j-1])*1000,-1),
+                                                    glm::vec3(1,(heights[i*width+j]-heights[(i+1)*width+j])*1000,0)));
+        rgbaData[4*(i*width+j)] = norm.x;
+        rgbaData[4*(i*width+j)+1] = norm.y;
+        rgbaData[4*(i*width+j)+2] = norm.z;
+      }
       rgbaData[4*(i*width+j)+3] = heights[i*width+j];
     }
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, rgbaData);
