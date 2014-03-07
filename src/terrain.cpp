@@ -87,8 +87,8 @@ GLuint Terrain::makeTexture()
 {
   srand(1);
   GLuint texNumber = newTexture(true);
-  int width = 4097;
-  int height = 4097;
+  int width = 2049;
+  int height = 2049;
   float* heights = new float[width*height];
   for (int i=0;i<(width)*(height);i++) heights[i] = 0;
   heights[0] = 0.1;
@@ -108,7 +108,7 @@ GLuint Terrain::makeTexture()
         float c = heights[(i+sz)*width+j];
         float d = heights[(i+sz)*width+j+sz];
 
-        float hvar = 1.f/1200.f;
+        float hvar = 1.f/800.f;
         heights[(i+sz/2)*width+(j+sz/2)] = (a+b+c+d)/4 + sz*hvar * (rand()%100-50)/100.f ;
         heights[(i+sz/2)*width+(j)] = (a+c)/2 + sz*hvar * (rand()%100-50)/100.f;
         heights[(i)*width+(j+sz/2)] = (a+b)/2 + sz*hvar * (rand()%100-50)/100.f;
@@ -130,10 +130,12 @@ GLuint Terrain::makeTexture()
       {
         glm::vec3 norm = -glm::normalize(glm::cross(glm::vec3(-1,(heights[i*width+j]-heights[(i-1)*width+j])*1000,0),
                                                     glm::vec3(0,(heights[i*width+j]-heights[i*width+j-1])*1000,-1))+
+                                         glm::cross(glm::vec3(0,(heights[i*width+j]-heights[(i)*width+j-1])*1000,-1),
+                                                    glm::vec3(1,(heights[i*width+j]-heights[(i+1)*width+j])*1000,0))+
+                                         glm::cross(glm::vec3(1,(heights[i*width+j]-heights[(i+1)*width+j])*1000,0),
+                                                    glm::vec3(0,(heights[i*width+j]-heights[(i)*width+j+1])*1000,1))+
                                          glm::cross(glm::vec3(0,(heights[i*width+j]-heights[(i)*width+j+1])*1000,1),
-                                                    glm::vec3(-1,(heights[i*width+j]-heights[(i-1)*width+j+1])*1000,1))+
-                                         glm::cross(glm::vec3(1,(heights[i*width+j]-heights[(i+1)*width+j-1])*1000,-1),
-                                                    glm::vec3(1,(heights[i*width+j]-heights[(i+1)*width+j])*1000,0)));
+                                                    glm::vec3(-1,(heights[i*width+j]-heights[(i-1)*width+j])*1000,0)));
         rgbaData[4*(i*width+j)] = norm.x;
         rgbaData[4*(i*width+j)+1] = norm.y;
         rgbaData[4*(i*width+j)+2] = norm.z;
