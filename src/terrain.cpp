@@ -8,6 +8,7 @@
 #include <smallFern.h>
 #include <heightmap.h>
 #include <cmath>
+#include <texture.h>
 #include <stdlib.h>
 
 GLuint texture = 0;
@@ -21,7 +22,7 @@ Terrain::Terrain(glm::vec3 pos,Game* parent) : Object(pos,parent)
   initialiseTriangles();
   freeze();
   shaderID = game->shaderManager->newShader("terrain",VERTEX_SHADER|GEOMETRY_SHADER|FRAGMENT_SHADER|TESSELATION_SHADER);
-  texture = makeTexture();
+  makeTexture();
 }
 
 /// Constructs the triangles
@@ -77,14 +78,13 @@ void Terrain::Render()
   // Load our transformation matrix etc
   game->shaderManager->getCurrentShader()->setObjectData(objectBO);
   // Select this object's texture
-  glActiveTexture(GL_TEXTURE3);
-  glBindTexture(GL_TEXTURE_2D,textureNumber);
+  heightmapTexture->load();
   glBindVertexArray(VAO);
   glPatchParameteri(GL_PATCH_VERTICES,3);
   glDrawArrays(GL_PATCHES,0,6*NUMBER_OF_PATCHES*NUMBER_OF_PATCHES);
 }
 
-GLuint Terrain::makeTexture()
+void Terrain::makeTexture()
 {
   srand(1);
   GLuint texNumber = newTexture(true);
@@ -112,8 +112,8 @@ GLuint Terrain::makeTexture()
       }
       rgbaData[4*(i*width+j)+3] = heights[i*width+j];
     }
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, rgbaData);
-  delete[] rgbaData;
-  delete[] heights;
-  return texNumber;
+  heightmapTexture = new Texture(HEIGHTMAP_TEXTURE,width,height);
+  heightmapTexture->loadData(rgbaData);
+  heightmapTexture->load();
+  heightmapTexture->toTGA("heightmap.tga");
 }

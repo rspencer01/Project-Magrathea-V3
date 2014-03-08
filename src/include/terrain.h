@@ -14,6 +14,7 @@ class Game;
 #include <magrathea.h>
 
 #include <vector>
+#include <texture.h>
 
 
 /// The size of a region on a side
@@ -28,7 +29,8 @@ class Terrain : public Object
   private:
   	/// Populates the VBOs
 	  void initialiseTriangles();
-    GLuint makeTexture();
+    void makeTexture();
+    Texture* heightmapTexture;
   public:
   	/// Constructs the region with the given coordinates
     Terrain(glm::vec3,Game*);
