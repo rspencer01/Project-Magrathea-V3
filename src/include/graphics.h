@@ -12,6 +12,6 @@
 
 #include <magrathea.h>
 
-void makePerspectiveMatrix(glm::mat4* mat);
+void makePerspectiveMatrix(glm::mat4* mat,float aspect);
 
 #endif

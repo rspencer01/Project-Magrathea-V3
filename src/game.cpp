@@ -45,7 +45,6 @@ void Game::initGraphics()
   glfwSetErrorCallback(error_callback);
   mainWindow = new Window(this);
   mainWindow->setKeyCallBack(&key_callback);
-  mainWindow->setContext();
   // Initialise glew.  If there is an error, report it
   glewExperimental=GL_TRUE;
   GLenum res = glewInit();
@@ -58,8 +57,7 @@ void Game::initGraphics()
   glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
   initTextEngine();
-  shaderManager = new ShaderManager();
-  makePerspectiveMatrix(&shaderManager->frameData.projectionMatrix);
+  shaderManager = new ShaderManager(); 
   camera = new Camera(&shaderManager->frameData.cameraMatrix,&shaderManager->frameData.cameraPosition);
   camera->setPosition(glm::vec3(4000,100,4000));
   oldMousePos = mainWindow->getSize()/2.f;

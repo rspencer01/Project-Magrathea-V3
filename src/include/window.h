@@ -7,6 +7,7 @@ class Window
 {
   private:
     GLFWwindow* windowHandle;
+    Game* game;
     int width;
     int height;
   public:

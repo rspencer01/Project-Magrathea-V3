@@ -1,10 +1,12 @@
 #include <magrathea.h>
+#include <graphics.h>
 #include <game.h>
 #include <window.h>
 
-Window::Window(Game* game)
+Window::Window(Game* parent)
 {
   width = height = 600;
+  game = parent;
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -12,6 +14,7 @@ Window::Window(Game* game)
   glfwSetWindowPos(windowHandle,800,30);
   if (!windowHandle)
     DIE("Failed to create window");
+  glfwMakeContextCurrent(windowHandle);
 }
 
 Window::~Window()
@@ -21,6 +24,8 @@ Window::~Window()
 
 void Window::setContext()
 {
+  glfwGetWindowSize(windowHandle,&width,&height);
+  makePerspectiveMatrix(&game->shaderManager->frameData.projectionMatrix,float(width)/height);
   glfwMakeContextCurrent(windowHandle);
   glViewport(0,0,width,height);
 }
