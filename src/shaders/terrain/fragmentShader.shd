@@ -16,6 +16,7 @@ layout(shared)uniform objectData
   mat4x4 objectMatrix;
 };
 uniform sampler2D heightmap;
+uniform sampler2D colourTexture;
 
 void main()
 {
@@ -31,5 +32,5 @@ void main()
   else if (gsPosition.y>1000)
   	FragColor = vec4(light*vec3(1),1);
   else
-   FragColor = vec4(0,light*0.7,0,1);
+   FragColor = vec4(light*texture(colourTexture,vec2(gsPosition.xz)/(10)).xyz,1);
 }

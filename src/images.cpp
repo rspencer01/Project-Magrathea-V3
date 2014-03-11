@@ -28,7 +28,7 @@ GLuint newTexture(bool smoothTexture)
   return returnValue;
 }
 
-GLuint textureFromTGA(const char* filePath, bool smoothTexture)
+Texture* textureFromTGA(const char* filePath, bool smoothTexture)
 {
 	logi.log("Loading texture %s",filePath);
 	FILE* fp = fopen(filePath,"rb");
@@ -52,8 +52,7 @@ GLuint textureFromTGA(const char* filePath, bool smoothTexture)
   fread(&inp,1,1,fp);
   if (inp!=32)
   {
-    loge.log("Error loading texture:  All TGA files must be 32 bit.\n");
-    return -1;
+    DIE("Error loading texture:  All TGA files must be 32 bit.\n");
   }
   fread(&inp,1,1,fp);
 
@@ -65,12 +64,16 @@ GLuint textureFromTGA(const char* filePath, bool smoothTexture)
     rgbaData[i*4     ] = rgbaData[i*4 + 2];
     rgbaData[i*4 + 2 ] = t;
   }
-  GLuint returnValue = newTexture(smoothTexture);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, rgbaData);
+  float* floatData = new float[width*height*4];
+  for (int i = 0;i<width*height*4;i++)
+    floatData[i] = rgbaData[i]/256.f;
+  Texture* texture = new Texture(COLOUR_TEXTURE,width,height);
+  texture->loadData(floatData);
 
   delete rgbaData;
+  delete floatData;
 	fclose(fp);
 
-	return returnValue;
+	return texture;
 
 }

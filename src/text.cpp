@@ -11,7 +11,7 @@ void initTextEngine()
 {
   logi.log("Initialising text engine");
 
-  fontTextureNumber = textureFromTGA("assets/font.tga",true);
+  //fontTextureNumber = textureFromTGA("assets/font.tga",true);
 }
 
 void printString(int x, int y, const char* format, ... )

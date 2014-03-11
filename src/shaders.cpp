@@ -205,6 +205,7 @@ void ShaderProgram::Load()
   // Set the uniform samplers
   setInt("shadowTexture",7);
   setInt("heightmap",0);
+  setInt("colourTexture",1);
   setInt("waterTexture",4);
 }
 

@@ -23,6 +23,7 @@ Terrain::Terrain(glm::vec3 pos,Game* parent) : Object(pos,parent)
   freeze();
   shaderID = game->shaderManager->newShader("terrain",VERTEX_SHADER|GEOMETRY_SHADER|FRAGMENT_SHADER|TESSELATION_SHADER);
   makeTexture();
+  texture = textureFromTGA("assets/grass.tga",true);
 }
 
 /// Constructs the triangles
@@ -74,6 +75,8 @@ void Terrain::initialiseTriangles()
 
 void Terrain::Render()
 {
+  heightmapTexture->load();
+  texture->load();
   game->shaderManager->loadShader(shaderID);
   // Load our transformation matrix etc
   game->shaderManager->getCurrentShader()->setObjectData(objectBO);

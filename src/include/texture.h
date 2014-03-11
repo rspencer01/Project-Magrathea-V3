@@ -4,6 +4,7 @@
 #include <magrathea.h>
 
 #define HEIGHTMAP_TEXTURE GL_TEXTURE0
+#define COLOUR_TEXTURE GL_TEXTURE1
 
 class Texture
 {
