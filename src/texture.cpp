@@ -72,7 +72,10 @@ void Texture::loadBumpData(float* inData)
       c = inData[i+width]*1000;
       d = inData[i-1]*1000;
       m = inData[i]*1000;
-      no = -glm::cross(glm::vec3(0.f,a-m,-1.f),glm::vec3(1.f,b-m,0.f));
+      no = -glm::cross(glm::vec3(0.f,a-m,-1.f),glm::vec3(1.f,b-m,0.f))
+           -glm::cross(glm::vec3(1.f,b-m,0.f),glm::vec3(0.f,c-m,1.f))
+           -glm::cross(glm::vec3(0.f,c-m,1.f),glm::vec3(-1.f,d-m,0.f))
+           -glm::cross(glm::vec3(-1.f,d-m,0.f),glm::vec3(0.f,a-m,-1.f));
     }
     no = glm::normalize(no);
     data[i*4  ] = no.x;
