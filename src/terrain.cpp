@@ -78,7 +78,6 @@ void Terrain::Render()
   // Load our transformation matrix etc
   game->shaderManager->getCurrentShader()->setObjectData(objectBO);
   // Select this object's texture
-  heightmapTexture->load();
   glBindVertexArray(VAO);
   glPatchParameteri(GL_PATCH_VERTICES,3);
   glDrawArrays(GL_PATCHES,0,6*NUMBER_OF_PATCHES*NUMBER_OF_PATCHES);
@@ -87,33 +86,11 @@ void Terrain::Render()
 void Terrain::makeTexture()
 {
   srand(1);
-  GLuint texNumber = newTexture(true);
   int width = 2049;
   int height = 2049;
   float* heights = getHeightmapData(width,height);
-
-  float* rgbaData = new float[width*height*4];
-  for (int i = 0;i<width;i++)
-    for (int j = 0; j<height;j++)
-    {
-      if (i>0&&j>0&&i<width-1&&j<height-1)
-      {
-        glm::vec3 norm = -glm::normalize(glm::cross(glm::vec3(-1,(heights[i*width+j]-heights[(i-1)*width+j])*1000,0),
-                                                    glm::vec3(0,(heights[i*width+j]-heights[i*width+j-1])*1000,-1))+
-                                         glm::cross(glm::vec3(0,(heights[i*width+j]-heights[(i)*width+j-1])*1000,-1),
-                                                    glm::vec3(1,(heights[i*width+j]-heights[(i+1)*width+j])*1000,0))+
-                                         glm::cross(glm::vec3(1,(heights[i*width+j]-heights[(i+1)*width+j])*1000,0),
-                                                    glm::vec3(0,(heights[i*width+j]-heights[(i)*width+j+1])*1000,1))+
-                                         glm::cross(glm::vec3(0,(heights[i*width+j]-heights[(i)*width+j+1])*1000,1),
-                                                    glm::vec3(-1,(heights[i*width+j]-heights[(i-1)*width+j])*1000,0)));
-        rgbaData[4*(i*width+j)] = norm.x;
-        rgbaData[4*(i*width+j)+1] = norm.y;
-        rgbaData[4*(i*width+j)+2] = norm.z;
-      }
-      rgbaData[4*(i*width+j)+3] = heights[i*width+j];
-    }
   heightmapTexture = new Texture(HEIGHTMAP_TEXTURE,width,height);
-  heightmapTexture->loadData(rgbaData);
+  heightmapTexture->loadBumpData(heights);
   heightmapTexture->load();
   heightmapTexture->toTGA("heightmap.tga");
 }
