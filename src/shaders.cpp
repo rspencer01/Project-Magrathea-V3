@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <fstream>
 #include <string>
+#include <cstring>
 
 GLuint gSampler;
 ShaderManager::ShaderManager()

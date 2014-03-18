@@ -3,7 +3,7 @@
 #include <math.h>
 #include <camera.h>
 #include <shaders.h>
-#include <gtc\matrix_transform.hpp>
+#include <gtc/matrix_transform.hpp>
 
 /// Construct a new camera, putting its matrix and position in the given locations
 /// @param gm The game in which this camera resides
