@@ -47,6 +47,9 @@ class Logger
 #define LOG_COLOUR_GREEN FOREGROUND_GREEN
 #else
 // For linux, I am sure there are single characters we can print.  They will be defined here.
+#define LOG_COLOUR_RED 0
+#define LOG_COLOUR_YELLOW 0
+#define LOG_COLOUR_GREEN 0
 #endif
 
 // Our three main loggers
