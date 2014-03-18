@@ -72,7 +72,7 @@ void Game::run()
     float ms = getFrameDiff();
     logFrame();
     float fps = getFrameRate();
-    char buffer[80]; sprintf_s(buffer,"Project Magrathea III (%.2f FPS : %.0fms)",fps,ms*1000);
+    char buffer[80]; sprintf(buffer,"Project Magrathea III (%.2f FPS : %.0fms)",fps,ms*1000);
     mainWindow->setTitle(buffer);
 
     if (mouseCameraControl)

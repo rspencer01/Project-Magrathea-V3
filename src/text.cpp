@@ -19,7 +19,7 @@ void printString(int x, int y, const char* format, ... )
   char buffer [80];
   va_list args;
   va_start(args, format);
-  vsprintf_s(buffer, format, args);
+  vsprintf(buffer, format, args);
   va_end(args);
   int i = 0;
   while (buffer[i])
