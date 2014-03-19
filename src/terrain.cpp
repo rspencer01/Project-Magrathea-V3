@@ -88,7 +88,6 @@ void Terrain::Render()
 
 void Terrain::makeTexture()
 {
-  srand(1);
   int width = 2049;
   int height = 2049;
   float* heights = getHeightmapData(width,height);

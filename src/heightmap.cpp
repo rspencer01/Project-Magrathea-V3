@@ -1,10 +1,14 @@
 #include <heightmap.h>
 #include <string.h>
 #include <math.h>
+#include <log.h>
 #include <stdlib.h>
 
 float* getHeightmapData(int width, int height)
 {
+  int seed = 1;
+  srand(seed);
+  logi.log("Constructing heightmap, seed %d",seed);
   float* heights = new float[width*height];
   for (int i=0;i<(width)*(height);i++) heights[i] = 0;
   heights[0] = 0.1;
