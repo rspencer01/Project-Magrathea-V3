@@ -3,14 +3,15 @@
 #include <text.h>
 #include <fpscounter.h>
 #include <camera.h>
+#include <noise.h>
 #include <graphics.h>
 
 Game* currentGame;
-void error_callback(int error, const char* description){loge.log(description);}
+void error_callback(int error, const char* description){loge.log("GLFW Error: %s",description);}
 void glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id,
                    GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
 {
-  loge.log("%s",message);
+  loge.log("OpenGL: %s",message);
 }
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -78,9 +79,9 @@ void Game::run()
     if (mouseCameraControl)
       camera->getInputFromWindow(mainWindow);
     if (keys['W'])
-      camera->MoveForward(ms*500.f);
+      camera->MoveForward(ms*5.f);
     if (keys['S'])
-      camera->MoveForward(-ms*500.f);
+      camera->MoveForward(-ms*5.f);
 
     glfwPollEvents();
     mainWindow->setContext();
