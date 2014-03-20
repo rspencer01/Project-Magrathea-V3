@@ -15,6 +15,7 @@ Texture::Texture(int type, int w, int h)
   for (int i = 0;i<width*height*4;i++)
     data[i] = i%4<4?0:1;
   glGenTextures(1,&textureNumber);
+  glActiveTexture(textureType);
   glBindTexture(GL_TEXTURE_2D,textureNumber);
   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
   glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -56,6 +57,8 @@ void Texture::toTGA(const char* file)
 void Texture::loadData(float* inData)
 {
   memcpy(data,inData,width*height*4*sizeof(float));
+  glActiveTexture(textureType);
+  glBindTexture(GL_TEXTURE_2D,textureNumber);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, data);
 }
 
@@ -83,6 +86,8 @@ void Texture::loadBumpData(float* inData)
     data[i*4+2] = no.z;
     data[i*4+3] = inData[i];
   }
+  glActiveTexture(textureType);
+  glBindTexture(GL_TEXTURE_2D,textureNumber);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, data);
 }
 

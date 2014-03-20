@@ -204,10 +204,9 @@ void ShaderProgram::Load()
   // Now load this program
   glUseProgram(ShaderProgramID);
   // Set the uniform samplers
-  setInt("shadowTexture",7);
   setInt("heightmap",0);
   setInt("colourTexture",1);
-  setInt("waterTexture",4);
+  setInt("noiseTexture",2);
 }
 
 GLuint ShaderProgram::getVariablePosition(const char* name)
