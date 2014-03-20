@@ -2,10 +2,8 @@
 #include <magrathea.h>
 #include <terrain.h>
 #include <game.h>
-#include <dynotree.h>
 #include <heightmap.h>
 #include <images.h>
-#include <smallFern.h>
 #include <heightmap.h>
 #include <cmath>
 #include <texture.h>
