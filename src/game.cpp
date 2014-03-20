@@ -32,6 +32,7 @@ Game::Game()
   logi.log("New game");
   logi.log("Initialising Graphics");
   initGraphics();
+  initNoise();
   terrain = new Terrain(glm::vec3(0),this);
   mouseCameraControl = false;
   currentGame = this;
