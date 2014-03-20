@@ -91,7 +91,7 @@ class Object
     /// Initialise the triangle and position datas
     void clearTriangleData(int,int);
     /// Adds a new vertex to the shape of this thing
-    void addPoint(int,glm::vec3,glm::vec3,float,float,float);
+    void addPoint(int,glm::vec3,glm::vec3,glm::vec4);
     /// Constructs a triangle with given points
   	void addTriangle(int,int,int,int);
     /// Pushes the triangle data to the graphics card

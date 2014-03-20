@@ -116,12 +116,12 @@ void Object::clearTriangleData(int p, int t)
 /// @param r The red component of the colour
 /// @param b The blue component of the colour
 /// @param g The green component of the colour
-void Object::addPoint(int i,glm::vec3 point,glm::vec3 normal, float r, float g, float b)
+void Object::addPoint(int i,glm::vec3 point,glm::vec3 normal, glm::vec4 col)
 {
   // Add it to the internal array
 	vertexData[i].position = point;
 	vertexData[i].normal = normal;
-	vertexData[i].colour = glm::vec4(r,g,b,1);
+	vertexData[i].colour = col;
   vertexData[i].texMix = glm::vec4(-1);
 }
 
