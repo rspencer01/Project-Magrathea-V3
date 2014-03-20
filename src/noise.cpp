@@ -1,8 +1,10 @@
 #include <noise.h>
+#include <log.h>
 #include <gtc\noise.hpp>
 
 void initNoise()
 {
+  logi.log("Creating noise");
   int width,height;
   width = 1000;
   height = 1000;

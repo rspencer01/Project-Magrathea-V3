@@ -28,7 +28,8 @@ float* getHeightmapData(int width, int height)
         float c = heights[(i+sz)*width+j];
         float d = heights[(i+sz)*width+j+sz];
 
-        float hvar = 1.f/800.f;
+        float hvar = 1.f/400.f;
+        if (sz>width/4) hvar =0;
         heights[(i+sz/2)*width+(j+sz/2)] = (a+b+c+d)/4 + sz*hvar * (rand()%100-50)/100.f ;
         heights[(i+sz/2)*width+(j)] = (a+c)/2 + sz*hvar * (rand()%100-50)/100.f;
         heights[(i)*width+(j+sz/2)] = (a+b)/2 + sz*hvar * (rand()%100-50)/100.f;

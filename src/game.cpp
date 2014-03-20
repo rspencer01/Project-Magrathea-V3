@@ -80,9 +80,9 @@ void Game::run()
     if (mouseCameraControl)
       camera->getInputFromWindow(mainWindow);
     if (keys['W'])
-      camera->MoveForward(ms*5.f);
+      camera->MoveForward(ms*50.f);
     if (keys['S'])
-      camera->MoveForward(-ms*5.f);
+      camera->MoveForward(-ms*50.f);
 
     glfwPollEvents();
     mainWindow->setContext();
