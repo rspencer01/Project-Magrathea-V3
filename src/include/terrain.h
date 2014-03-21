@@ -12,6 +12,7 @@
 class Game;
 #include <object.h>
 #include <magrathea.h>
+#include <forest.h>
 
 #include <vector>
 #include <texture.h>
@@ -31,6 +32,7 @@ class Terrain : public Object
 	  void initialiseTriangles();
     void makeTexture();
     Texture* heightmapTexture;
+    Forest* forest;
   public:
   	/// Constructs the region with the given coordinates
     Terrain(glm::vec3,Game*);

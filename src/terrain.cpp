@@ -22,6 +22,7 @@ Terrain::Terrain(glm::vec3 pos,Game* parent) : Object(pos,parent)
   shaderID = game->shaderManager->newShader("terrain",VERTEX_SHADER|GEOMETRY_SHADER|FRAGMENT_SHADER|TESSELATION_SHADER);
   makeTexture();
   texture = textureFromTGA("assets/grass.tga",true);
+  forest = new Forest(parent,heightmapTexture);
 }
 
 /// Constructs the triangles
@@ -36,37 +37,37 @@ void Terrain::initialiseTriangles()
 			                       0,
 			                       j*PATCH_SIZE),
                              glm::vec3(1,0,0),
-                             1,1,1);
+                             glm::vec4(1.f));
       addPoint((i*NUMBER_OF_PATCHES+j)*6+1,
                    glm::vec3(i*PATCH_SIZE,
 			                       0,
                              j*PATCH_SIZE+PATCH_SIZE),
                              glm::vec3(1,0,0),
-                             1,1,1);
+                             glm::vec4(1.f));
       addPoint((i*NUMBER_OF_PATCHES+j)*6+2,
                    glm::vec3(i*PATCH_SIZE+PATCH_SIZE,
 			                       0,
 			                       j*PATCH_SIZE+PATCH_SIZE),
                              glm::vec3(1,0,0),
-                             1,1,1);
+                             glm::vec4(1.f));
       addPoint((i*NUMBER_OF_PATCHES+j)*6+3,
                    glm::vec3(i*PATCH_SIZE+PATCH_SIZE,
 			                       0,
 			                       j*PATCH_SIZE+PATCH_SIZE),
                              glm::vec3(1,0,0),
-                             1,1,1);
+                             glm::vec4(1.f));
       addPoint((i*NUMBER_OF_PATCHES+j)*6+4,
                    glm::vec3(i*PATCH_SIZE+PATCH_SIZE,
 			                       0,
                              j*PATCH_SIZE),
                              glm::vec3(1,0,0),
-                             1,1,1);
+                             glm::vec4(1.f));
       addPoint((i*NUMBER_OF_PATCHES+j)*6+5,
                    glm::vec3(i*PATCH_SIZE,
 			                       0,
                              j*PATCH_SIZE),
                              glm::vec3(1,0,0),
-                             1,1,1);
+                             glm::vec4(1.f));
     }
   pushTriangleData(); 
 }
@@ -82,6 +83,8 @@ void Terrain::Render()
   glBindVertexArray(VAO);
   glPatchParameteri(GL_PATCH_VERTICES,3);
   glDrawArrays(GL_PATCHES,0,6*NUMBER_OF_PATCHES*NUMBER_OF_PATCHES);
+  //Render the forest
+  forest->Render();
 }
 
 void Terrain::makeTexture()

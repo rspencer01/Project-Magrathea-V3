@@ -1,0 +1,28 @@
+#version 140
+
+in vec4 gsPosition;
+in vec2 gsTex;
+out vec4 FragColor;
+
+layout(shared)uniform frameData
+{
+  mat4x4 transformationMatrix;
+  vec4 cameraPos;
+  mat4x4 projectionMatrix;  
+};
+
+
+layout(shared)uniform objectData
+{
+  mat4x4 objectMatrix;
+};
+uniform sampler2D colourTexture;
+void main()
+{
+  float fog = 0;
+  if (length(cameraPos-gsPosition)>1000)
+    fog = clamp((length(cameraPos-gsPosition)-1000)/3000,0,1);
+  FragColor = texture(colourTexture,gsTex);
+  FragColor.xyz = FragColor.xyz*(1-fog)+vec3(0.54,0.93,0.93)*fog;
+  if (FragColor.a<0.1) discard;
+}
