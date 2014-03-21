@@ -56,6 +56,8 @@ void Game::initGraphics()
   }
   glDebugMessageCallbackARB((GLDEBUGPROCARB) glDebugMessageCallbackFunction, NULL); 
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
   initTextEngine();
@@ -95,6 +97,7 @@ void Game::run()
 void Game::renderMainWindow()
 {
   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+  glClearColor(0.54,0.93,0.93,1.0);
   camera->Render();
   shaderManager->setFrameData();
   terrain->Render();
