@@ -19,8 +19,8 @@ class Game;
 
 
 /// The size of a region on a side
-#define PATCH_SIZE 25
-#define NUMBER_OF_PATCHES 320
+#define PATCH_SIZE 50
+#define NUMBER_OF_PATCHES 160
 
 /// A region class is a section of terrain covered by a single texture
 ///
