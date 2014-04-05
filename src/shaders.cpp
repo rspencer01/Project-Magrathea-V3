@@ -20,8 +20,8 @@ int ShaderManager::newShader(const char* name,int types)
 {
   if (shaderNames.count(std::string(name))!=0)
     return shaderNames[std::string(name)];
-  logi.log("New Shader \"%s\"",name);
-  shaders[numShaders] = new ShaderProgram();
+  shaders[numShaders] = new ShaderProgram(name);
+  stypes[numShaders] = types;
   char path[80]={0};
   if (types&VERTEX_SHADER)
   {
@@ -86,6 +86,42 @@ ShaderProgram* ShaderManager::getCurrentShader()
   return shaders[currentShader];
 }
 
+void ShaderManager::reloadAll()
+{
+  // TODO: redo this completely.
+  logw.clog(LOG_COLOUR_RED,"Reloading shaders...");
+  for (int i = 0;i<numShaders;i++)
+  {
+    const char* name = shaders[i]->name;
+    delete shaders[i];
+    shaders[i] = new ShaderProgram(name);
+    char path[80]={0};
+    if (stypes[i]&VERTEX_SHADER)
+    {
+      strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/vertexShader.shd");
+      shaders[i]->LoadShader(path,GL_VERTEX_SHADER);
+    }
+    if (stypes[i]&GEOMETRY_SHADER)
+    {
+      strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/geometryShader.shd");
+      shaders[i]->LoadShader(path,GL_GEOMETRY_SHADER);
+    }
+    if (stypes[i]&TESSELATION_SHADER)
+    {
+      strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/tesselationControlShader.shd");
+      shaders[i]->LoadShader(path,GL_TESS_CONTROL_SHADER);
+      strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/tesselationEvaluationShader.shd");
+      shaders[i]->LoadShader(path,GL_TESS_EVALUATION_SHADER);
+    }
+    if (stypes[i]&FRAGMENT_SHADER)
+    {
+      strcpy(path,"./shaders/");strcat(path,name);strcat(path,"/fragmentShader.shd");
+      shaders[i]->LoadShader(path,GL_FRAGMENT_SHADER);
+    }
+    shaders[i]->CompileAll();
+    shaders[i]->Load();
+  }
+}
 
 
 /// Gets rid of all the 0x0D values in a file (kills the GLSL compiler)
@@ -100,8 +136,11 @@ void sanatiseShader(std::string program)
 }
 
 /// Ask OpenGL to create a new shader program, and kill the program if there was an error
-ShaderProgram::ShaderProgram()
+ShaderProgram::ShaderProgram(const char* nm)
 {
+  // Store the name
+  name = nm;
+  logi.clog(LOG_COLOR_BLUE,"New Shader \"%s\"",name);
   // Construct the program we are going to use
   ShaderProgramID = glCreateProgram();
   // If there was an error, let us know

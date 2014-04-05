@@ -35,6 +35,7 @@ class ShaderManager
     int currentShader;
     int numShaders;
     ShaderProgram* shaders[100];
+    int stypes[100];
     std::map<std::string,int> shaderNames;
     /// The position of the frame information
     GLuint frameDataPosition;
@@ -48,6 +49,7 @@ class ShaderManager
     FrameData frameData;
     void setFrameData();
     int addShader(ShaderProgram*,const char*);
+    void reloadAll();
 };
 
 /// A shader program object handles the loading, compiling and executing of shaders (both vertex and fragment)
@@ -67,7 +69,7 @@ class ShaderProgram
     GLuint frameDataPosition;
   public:
     /// Construct the program (empty and unloaded)
-    ShaderProgram();
+    ShaderProgram(const char* nm);
     /// Add an object
     void LoadShader(const char*,GLenum);
     /// Link all the pieces together
@@ -82,6 +84,8 @@ class ShaderProgram
     void setFrameData(int);
     /// An accessor to get the buffer index
     GLuint getFrameDataBufferNumber();
+    /// The name of the shader.  Used for reloading purposes
+    const char* name;
 };
 
 #endif 

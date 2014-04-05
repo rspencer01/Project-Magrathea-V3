@@ -113,6 +113,8 @@ void Game::key(int key, int scancode, int action, int mods)
       if (mouseCameraControl)
         mainWindow->setMouseCentre();
     }
+    if (key==GLFW_KEY_F5)
+      shaderManager->reloadAll();
     keys[key] = true;
   }
   if (action==GLFW_RELEASE)
