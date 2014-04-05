@@ -70,15 +70,15 @@ void Texture::loadBumpData(float* inData)
     if ((i%width)>0 && (i/width>0) && (i%width<width-1) && (i/width<height-1))
     {
       float a,b,c,d,m;
-      a = inData[i-width]*1000;
-      b = inData[i+1]*1000;
-      c = inData[i+width]*1000;
-      d = inData[i-1]*1000;
-      m = inData[i]*1000;
-      no = -glm::cross(glm::vec3(0.f,a-m,-1.f),glm::vec3(1.f,b-m,0.f))
-           -glm::cross(glm::vec3(1.f,b-m,0.f),glm::vec3(0.f,c-m,1.f))
-           -glm::cross(glm::vec3(0.f,c-m,1.f),glm::vec3(-1.f,d-m,0.f))
-           -glm::cross(glm::vec3(-1.f,d-m,0.f),glm::vec3(0.f,a-m,-1.f));
+      a = inData[i-width];
+      b = inData[i+1];
+      c = inData[i+width];
+      d = inData[i-1];
+      m = inData[i];
+      no = -glm::cross(glm::vec3(0.f,a-m,-1.f/height),glm::vec3(1.f/width,b-m,0.f))
+           -glm::cross(glm::vec3(1.f/width,b-m,0.f),glm::vec3(0.f,c-m,1.f/height))
+           -glm::cross(glm::vec3(0.f,c-m,1.f/height),glm::vec3(-1.f/width,d-m,0.f))
+           -glm::cross(glm::vec3(-1.f/width,d-m,0.f),glm::vec3(0.f,a-m,-1.f/height));
     }
     no = glm::normalize(no);
     data[i*4  ] = no.x;
