@@ -44,9 +44,12 @@ class Logger
 
 // Here we define the colours.  For windows, we use SetConsoleTextAtribute, so these are the numbers wanted
 #ifdef _WIN32
-#define LOG_COLOUR_RED FOREGROUND_RED
-#define LOG_COLOUR_YELLOW FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_INTENSITY
-#define LOG_COLOUR_GREEN FOREGROUND_GREEN
+#define LOG_COLOUR_RED       FOREGROUND_RED
+#define LOG_COLOUR_YELLOW    FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_INTENSITY
+#define LOG_COLOUR_GREEN     FOREGROUND_GREEN
+#define LOG_COLOR_BLUE       FOREGROUND_BLUE
+#define LOG_COLOR_LIGHT_BLUE FOREGROUND_BLUE|FOREGROUND_INTENSITY
+#define LOG_COLOR_PURPLE     FOREGROUND_RED|FOREGROUND_BLUE
 #else
 // For linux, I am sure there are single characters we can print.  They will be defined here.
 #define LOG_COLOUR_RED 0

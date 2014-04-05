@@ -30,7 +30,7 @@ GLuint newTexture(bool smoothTexture)
 
 Texture* textureFromTGA(const char* filePath, bool smoothTexture)
 {
-	logi.log("Loading texture %s",filePath);
+	logi.clog(LOG_COLOR_PURPLE,"Loading texture %s",filePath);
 	FILE* fp = fopen(filePath,"rb");
   if (fp==NULL)
     DIE2("Texture path doesn't exist:",filePath);

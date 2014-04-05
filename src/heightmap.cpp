@@ -42,6 +42,6 @@ float* getHeightmapData(int width, int height)
   }
   for (int i = 0;i<width;i++)
     for (int j = 0; j<height;j++)
-      heights[i*width+j] = pow(abs((double)heights[i*width+j]),1.5)*0.7;
+      heights[i*width+j] = 8*pow(abs((double)heights[i*width+j]),1.5)*0.7;
   return heights;
 }
