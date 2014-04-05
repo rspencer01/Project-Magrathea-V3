@@ -47,10 +47,33 @@ void Logger::log(const char* format, ...)
   beginLog();
 
   // ... the actual message ...
+  fprintf(out,"  ");
   va_list args;
   va_start (args, format);
   vfprintf(out, format, args);
   va_end(args);
+
+  // ... and a newline
+  fprintf(out,"\n");
+}
+
+void Logger::clog(int logColor,const char* format, ...)
+{
+  beginLog();
+
+#ifdef _WIN32
+  SetConsoleTextAttribute(hConsole,logColor);
+#endif
+  fprintf(out,"\xFE ");
+#ifdef _WIN32
+  SetConsoleTextAttribute(hConsole,FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+#endif
+  // ... the actual message ...
+  va_list args;
+  va_start (args, format);
+  vfprintf(out, format, args);
+  va_end(args);
+
 
   // ... and a newline
   fprintf(out,"\n");

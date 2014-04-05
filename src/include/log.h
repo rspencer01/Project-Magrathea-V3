@@ -38,6 +38,8 @@ class Logger
     Logger(FILE*,int);
     /// Log some text
     void log(const char*,...);
+    /// Log text with some defining color swatch
+    void clog(int logColor, const char*,...);
 };
 
 // Here we define the colours.  For windows, we use SetConsoleTextAtribute, so these are the numbers wanted
