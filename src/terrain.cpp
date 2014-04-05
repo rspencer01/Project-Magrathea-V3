@@ -90,7 +90,7 @@ void Terrain::Render()
 void Terrain::makeTexture()
 {
   int width = 2049;
-  int height = 2049;
+  int height = width;
   float* heights = getHeightmapData(width,height);
   heightmapTexture = new Texture(HEIGHTMAP_TEXTURE,width,height);
   heightmapTexture->loadBumpData(heights);
