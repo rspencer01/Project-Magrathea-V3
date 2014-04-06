@@ -15,7 +15,7 @@ layout(shared)uniform frameData
 
 int detailLevel(float dist)
 {
-  return int(clamp(100*exp(-dist/400),1,64));
+  return int(clamp(70*exp(-dist/500),1,20));
 }
 
 

@@ -25,13 +25,15 @@ vec4 mapToTexture(vec4 pos)
 } 
 
 uniform sampler2D heightmap;
+uniform sampler2D noiseTexture;
 
 void main() 
 {
   vec4 inf = texture(heightmap,(vsPosition[0].xz)/8000);
-  if (inf.y<0.7) return;
+  if (inf.y<0.2) return;
   if (inf.w<0.01) return;
-  if (length(cameraPos-vsPosition[0])>1000)return;
+  //if (length(cameraPos-vsPosition[0])>1000)return;
+  //if (texture(noiseTexture,(vsPosition[0].zx)/4000).w<0) return;
 
   vec4 pos = vsPosition[0];
   pos.y =  texture(heightmap,(vsPosition[0].xz)/8000).a*1000;

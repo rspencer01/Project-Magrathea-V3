@@ -19,27 +19,61 @@ uniform sampler2D heightmap;
 uniform sampler2D colourTexture;
 uniform sampler2D noiseTexture;
 
+float gaussian(float x, float sigma, float mu)
+{
+  return exp(-pow(x-mu,2)/(2*pow(sigma,2)));
+}
+
+float tops(float x, float sigma, float mu)
+{
+  if (x<mu)
+    return gaussian(x,sigma,mu);
+  return 1.0;
+}
+float bots(float x, float sigma, float mu)
+{
+  if (x>mu)
+    return gaussian(x,sigma,mu);
+  return 1.0;
+}
+
+
+const vec3 grass1Color = /*vec3(1,0,0);*/vec3(67,101,41)/256;
+const vec3 grass2Color = /*vec3(0,1,0);*/vec3(92,116,44)/256;
+const vec3 rocklColor = /*vec3(0,0,1);*/vec3(120,120,120)/256;
+const vec3 rock2Color = /*vec3(0,0,1);*/vec3(60,60,60)/256;
+const vec3 sand1Color = vec3(161,150,97)/256;
+
 void main()
 {
+  vec3 groundColor;
+  vec3 fogColor = vec3(0.54,0.93,0.93);
   vec3 normal = texture(heightmap,(gsPosition.xz)/8000).xyz;
-  
+  normal.t*=8;
+  normal = normalize(normal);
+  float light = 0.6+0.4*normal.y;
   float fog = 0;
   if (length(cameraPos-gsPosition)>1000)
-    fog = clamp((length(cameraPos-gsPosition)-1000)/3000,0,1);
-  if (texture(heightmap,(gsPosition.xz)/8000).a<0.0005) FragColor= vec4(0,0,0.3,1);
-  else if (texture(heightmap,(gsPosition.xz)/8000).a<0.0020)
-  FragColor = vec4(vec3(200,183,104.0)/vec3(256),1);
-  else if ((normal.y<0.4))
+    fog = clamp((length(cameraPos-gsPosition)-1000)/3000,0,1);  
+  if (texture(heightmap,(gsPosition.xz)/8000).a*1000<2.5)
   {
-  	FragColor = vec4(vec3(132,122,114)/256,1);
-    normal += 0.3*texture(noiseTexture,gsPosition.xz/80).xyz;
-    normal = normalize(normal);
+    groundColor = vec3(0.1,0.1,0.5);
+    groundColor += vec3(0.05,0.05,0.1)*texture(noiseTexture,gsPosition.xz/80).w;
+    float spec = clamp(pow(dot(normalize(-gsPosition+cameraPos).xyz,vec3(0,1,0)),70),0,1);
+    groundColor += vec3(spec);
+    light = 1;
   }
-  else if (gsPosition.y>1000)
-  	FragColor = vec4(vec3(1),1);
   else
-    FragColor = vec4((vec3(0.3,0.8,0.3)*0.9+texture(noiseTexture,gsPosition.xz/8000).xyz*0.1),1);
-    float light = 0.5+0.5*normal.y;
-  FragColor = vec4(FragColor.xyz*light*(1-fog),1);
-  FragColor.xyz = FragColor.xyz*(1-fog)+vec3(0.54,0.93,0.93)*fog;
+  {
+    float ns = pow(texture(noiseTexture,gsPosition.xz/200).w*2+texture(noiseTexture,gsPosition.xz/20).w,3);
+    float grass1 = 1+texture(noiseTexture,gsPosition.zx/20).w;
+    float grass2 = 2*gaussian(ns,0.2,0.7)+2*gaussian(ns,0.2,-0.5);
+    float rock1 = 2*tops(ns,0.5,1.5)+200*bots(normal.y,0.11,0.3);
+    float rock2 = 2*tops(ns,0.3,1.7)+200*bots(normal.y,0.05,0.1);
+    float sand1 = 2*bots(ns,0.7,-1.7)+100*bots(texture(heightmap,(gsPosition.xz)/8000).a*1000,3,2.5)+20*bots(texture(heightmap,(gsPosition.xz)/8000).a*1000,3,4);
+    float tot = grass1+grass2+rock1+sand1+rock2;
+    groundColor = (grass1Color*grass1+grass2Color*grass2+rock1*rocklColor+rock2*rock2Color+sand1*sand1Color)/tot;
+  }
+  FragColor = vec4(groundColor*light*(1-fog) + fog*fogColor,1);
+
 }
