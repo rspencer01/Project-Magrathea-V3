@@ -34,7 +34,7 @@ Game::Game()
   initGraphics();
   //initNoise();
   //terrain = new Terrain(glm::vec3(0),this);
-  person = new TestPerson(glm::vec3(0),this);
+  person = new Avatar(glm::vec3(0),this);
   mouseCameraControl = false;
   currentGame = this;
   for (int i = 0;i<256;i++)keys[i] =false;

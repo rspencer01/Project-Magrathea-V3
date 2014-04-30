@@ -15,6 +15,7 @@
 #include <camera.h>
 #include <terrain.h>
 #include <bones.h>
+#include <avatar.h>
 
 /// The gameops class contains all the methods to do with gameplay
 ///
@@ -35,7 +36,7 @@ class Game
     Terrain* terrain;
     bool mouseCameraControl;
     bool keys[256];
-    TestPerson* person;
+    Avatar* person;
   public:
     /// Creates a game instance and initialises all variables.
     Game();

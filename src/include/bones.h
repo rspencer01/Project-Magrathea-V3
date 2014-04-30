@@ -7,7 +7,6 @@
 #include <string>
 using namespace std;
 
-class TestPerson;
 class Skeleton;
 
 class Bone
@@ -30,28 +29,6 @@ class Bone
     glm::mat4* populateMat(glm::mat4* wher);
     void addChild(Bone*);
     Bone* findByName(string);
-};
-
-typedef struct
-{
-  glm::mat4 transformMatrix;
-  glm::mat4 boneMatrices[64];
-} PersonObjectData;
-
-
-#include "skeleton.h"
-
-class TestPerson : public Object
-{
-  private:
-    Skeleton* skeleton;
-/// The PersonObjectData, colour etc for this object
-    PersonObjectData personObjectData;
-  public:
-    TestPerson(glm::vec3,Game*);
-    void LoadFromOBJ(const char*);
-    void Render(float ms);
-    
 };
 
 #endif
