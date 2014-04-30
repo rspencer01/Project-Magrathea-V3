@@ -14,6 +14,7 @@
 #include <shaders.h>
 #include <camera.h>
 #include <terrain.h>
+#include <bones.h>
 
 /// The gameops class contains all the methods to do with gameplay
 ///
@@ -25,7 +26,7 @@ class Game
     /// Initialises OpenGL and the window
     void initGraphics();
     /// Renders the status window
-    void renderMainWindow();
+    void renderMainWindow(float ms);
     /// The main window;
     Window* mainWindow;
     /// The main camera
@@ -34,6 +35,7 @@ class Game
     Terrain* terrain;
     bool mouseCameraControl;
     bool keys[256];
+    TestPerson* person;
   public:
     /// Creates a game instance and initialises all variables.
     Game();

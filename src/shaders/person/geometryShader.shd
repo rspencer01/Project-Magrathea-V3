@@ -1,0 +1,31 @@
+#version 150
+
+layout(lines) in;
+layout(line_strip,max_vertices=4) out;
+
+in vec4 vsPosition[];
+out vec4 gsPosition;
+out vec2 gsTex;
+
+layout(shared)uniform frameData
+{
+  mat4x4 transformationMatrix;
+  vec4 cameraPos;
+  mat4x4 projectionMatrix;  
+};
+
+layout(shared)uniform objectData
+{
+  mat4x4 objectMatrix;
+  mat4x4 boneMatrices[64];
+};
+
+
+void main() 
+{
+  gl_Position = projectionMatrix * transformationMatrix * vsPosition[0];
+  EmitVertex();
+  gl_Position = projectionMatrix * transformationMatrix * vsPosition[1];
+  EmitVertex();
+  EndPrimitive();
+}

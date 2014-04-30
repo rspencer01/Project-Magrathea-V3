@@ -50,6 +50,7 @@ class Logger
 #define LOG_COLOR_BLUE       FOREGROUND_BLUE
 #define LOG_COLOR_LIGHT_BLUE FOREGROUND_BLUE|FOREGROUND_INTENSITY
 #define LOG_COLOR_PURPLE     FOREGROUND_RED|FOREGROUND_BLUE
+#define LOG_COLOR_LIGHT_RED  FOREGROUND_RED|FOREGROUND_INTENSITY
 #else
 // For linux, I am sure there are single characters we can print.  They will be defined here.
 #define LOG_COLOUR_RED 0

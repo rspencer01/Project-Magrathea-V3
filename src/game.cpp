@@ -32,8 +32,9 @@ Game::Game()
   logi.log("New game");
   logi.log("Initialising Graphics");
   initGraphics();
-  initNoise();
-  terrain = new Terrain(glm::vec3(0),this);
+  //initNoise();
+  //terrain = new Terrain(glm::vec3(0),this);
+  person = new TestPerson(glm::vec3(0),this);
   mouseCameraControl = false;
   currentGame = this;
   for (int i = 0;i<256;i++)keys[i] =false;
@@ -56,6 +57,7 @@ void Game::initGraphics()
   }
   glDebugMessageCallbackARB((GLDEBUGPROCARB) glDebugMessageCallbackFunction, NULL); 
   glEnable(GL_DEPTH_TEST);
+  glPointSize(2);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
@@ -63,7 +65,8 @@ void Game::initGraphics()
   initTextEngine();
   shaderManager = new ShaderManager(); 
   camera = new Camera(&shaderManager->frameData.cameraMatrix,&shaderManager->frameData.cameraPosition);
-  camera->setPosition(glm::vec3(4000,100,4000));
+  //camera->setPosition(glm::vec3(4000,100,4000));
+  camera->setPosition(glm::vec3(-5,0,0));
   oldMousePos = mainWindow->getSize()/2.f;
 }
 
@@ -82,25 +85,26 @@ void Game::run()
     if (mouseCameraControl)
       camera->getInputFromWindow(mainWindow);
     if (keys['W'])
-      camera->MoveForward(ms*50.f);
+      camera->MoveForward(ms*2.f);
     if (keys['S'])
-      camera->MoveForward(-ms*50.f);
+      camera->MoveForward(-ms*2.f);
 
     glfwPollEvents();
     mainWindow->setContext();
-    renderMainWindow();
+    renderMainWindow(ms);
     mainWindow->swapBuffers();
   }
   glfwTerminate();
 }
 
-void Game::renderMainWindow()
+void Game::renderMainWindow(float ms)
 {
   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
   glClearColor(0.54,0.93,0.93,1.0);
   camera->Render();
   shaderManager->setFrameData();
-  terrain->Render();
+  //terrain->Render();
+  person->Render(ms);
 }
 
 void Game::key(int key, int scancode, int action, int mods)

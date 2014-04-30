@@ -1,0 +1,36 @@
+#version 150
+
+layout(triangles) in;
+layout(triangle_strip,max_vertices=4) out;
+
+in vec4 vsPosition[];
+in vec4 vsNormal[];
+in vec4 vsColour[];
+out vec4 gsPosition;
+out vec4 gsNormal;
+out vec4 gsColour;
+
+layout(shared)uniform frameData
+{
+  mat4x4 transformationMatrix;
+  vec4 cameraPos;
+  mat4x4 projectionMatrix;  
+};
+
+layout(shared)uniform objectData
+{
+  mat4x4 objectMatrix;
+  mat4x4 boneMatrices[64];
+};
+
+void main() 
+{
+  for (int i = 0; i<3 ; i++)
+  {
+  	gsNormal = vsNormal[i];
+    gsColour = vsColour[i];
+    gl_Position = projectionMatrix * transformationMatrix *vsPosition[i];
+    EmitVertex();
+  }
+  EndPrimitive();
+} 

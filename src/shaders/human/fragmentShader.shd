@@ -1,0 +1,10 @@
+#version 140
+
+in vec4 gsNormal;
+in vec4 gsColour;
+out vec4 FragColor;
+
+void main()
+{
+  FragColor = vec4(vec3(0.3+0.7*dot(gsNormal.xyz,normalize(vec3(1,1,0)))),1);
+}
