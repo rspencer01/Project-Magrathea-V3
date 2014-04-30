@@ -29,6 +29,7 @@ class Bone
     void genTotOffset(glm::vec3 of,glm::mat4 tf);
     glm::mat4* populateMat(glm::mat4* wher);
     void addChild(Bone*);
+    Bone* findByName(string);
 };
 
 typedef struct
@@ -37,29 +38,8 @@ typedef struct
   glm::mat4 boneMatrices[64];
 } PersonObjectData;
 
-class Skeleton : public Object
-{
-  private:
-    vector<string> items;
-    int addBone(int i,Bone* parent);
-    map<string,vector<vector<float> > > animation;
-    int numberOfChannels;
-    vector<float*> placesForAnimation;
-    PersonObjectData skeletonObjectData;
-  public:
-    float frameTime;
-    Skeleton(glm::vec3,Game*);
-    Bone* root;
-    void readFromFile(const char*);
-    TestPerson* parent;
-    void getNextAnimation();
-    void Render(float ms);
-    void addPt(glm::vec3 pos,glm::vec3 bns,glm::vec3 wgh);
-    void pushAnimationData(glm::mat4*);
-    int boneIDByName(string);
-};
 
-
+#include "skeleton.h"
 
 class TestPerson : public Object
 {
