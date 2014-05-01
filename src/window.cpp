@@ -45,6 +45,11 @@ void Window::setKeyCallBack(GLFWkeyfun func)
   glfwSetKeyCallback(windowHandle,func);
 }
 
+void Window::setScrollCallBack(GLFWscrollfun func)
+{
+  glfwSetScrollCallback(windowHandle,func);
+}
+
 void Window::setTitle(const char* s)
 {
   glfwSetWindowTitle(windowHandle,s);

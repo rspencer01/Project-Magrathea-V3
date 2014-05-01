@@ -32,6 +32,8 @@ class Camera
     glm::mat4* matrixData;
     /// Where should this camera put its position upon rendering
     glm::vec4* positionData;
+    /// How far from the object are we
+    float followingDistance;
   public:
 	  /// Initialises the camera
   	Camera(glm::mat4*,glm::vec4*);				
@@ -58,6 +60,7 @@ class Camera
     void getInputFromWindow(Window*);
     /// To what object is this camera attached
     Object* attachment;
+    void zoomIn(float);
 };
 
 #endif

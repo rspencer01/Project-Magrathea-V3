@@ -24,5 +24,5 @@ void main()
     fog = clamp((length(cameraPos-gsPosition)-1000)/3000,0,1);
   FragColor = texture(colourTexture,gsTex);
   FragColor.xyz = FragColor.xyz*(1-fog)+vec3(0.54,0.93,0.93)*fog;
-  if (FragColor.a<0.1) discard;
+  if (FragColor.a<0.8) discard;
 }

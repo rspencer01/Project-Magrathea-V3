@@ -23,6 +23,6 @@ class Window
     glm::vec2 getMouseCentreOffset();
     void setMousePos(glm::vec2);
     void setMouseCentre();
-
+    void setScrollCallBack(GLFWscrollfun func);
 };
 #endif

@@ -131,6 +131,5 @@ void Avatar::LoadFromOBJ(const char* filepath)
     i++;
   }
 
-
   pushTriangleData();
 }

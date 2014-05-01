@@ -21,6 +21,7 @@ Camera::Camera(glm::mat4* matrix, glm::vec4* position)
   positionData = position;
   // What are we attaching to
   attachment = NULL;
+  followingDistance = 10.f;
 }
 
 /// Modifys the game world transform to reflect the postion of the camera.
@@ -36,7 +37,7 @@ void Camera::Render()
 
   if (attachment!=NULL)
   {
-    Position = attachment->getPosition() - 10.f*ViewDir;
+    Position = attachment->getPosition() - followingDistance*ViewDir;
   }
 
   // Construct a matrix that transforms the object in the correct way
@@ -120,4 +121,9 @@ void Camera::getInputFromWindow(Window* win)
   win->setMouseCentre();
   RotateX(-diff.y*0.005);
   RotateFlat(-diff.x*0.005);
+}
+
+void Camera::zoomIn(float am)
+{
+  followingDistance += am;
 }

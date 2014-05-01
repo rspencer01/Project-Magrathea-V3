@@ -49,6 +49,7 @@ class Game
     ShaderManager* shaderManager;
     /// A key event log
     void key(int,int,int,int);
+    void scroll(float,float);
 };
 
 #endif

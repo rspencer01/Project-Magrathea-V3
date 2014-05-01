@@ -21,6 +21,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     currentGame->key(key,scancode,action,mods);
 }
 
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+  currentGame->scroll(xoffset,yoffset);
+}
+
 
 /// The constructor for the game class
 ///
@@ -48,6 +53,7 @@ void Game::initGraphics()
   glfwSetErrorCallback(error_callback);
   mainWindow = new Window(this);
   mainWindow->setKeyCallBack(&key_callback);
+  mainWindow->setScrollCallBack(&scroll_callback);
   // Initialise glew.  If there is an error, report it
   glewExperimental=GL_TRUE;
   GLenum res = glewInit();
@@ -131,4 +137,9 @@ void Game::key(int key, int scancode, int action, int mods)
   }
   if (action==GLFW_RELEASE)
     keys[key] = false;
+}
+
+void Game::scroll(float xoffset, float yoffset)
+{
+  camera->zoomIn(yoffset*-0.5);
 }
