@@ -34,7 +34,7 @@ Game::Game()
   initGraphics();
   initNoise();
   terrain = new Terrain(glm::vec3(0),this);
-  person = new Avatar(glm::vec3(4000,0,4000),this);
+  person = new Avatar(glm::vec3(4010,0,4010),this);
   mouseCameraControl = false;
   currentGame = this;
   for (int i = 0;i<256;i++)keys[i] =false;
@@ -60,7 +60,7 @@ void Game::initGraphics()
   glPointSize(2);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-  glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+  glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
   initTextEngine();
   shaderManager = new ShaderManager(); 

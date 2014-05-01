@@ -110,6 +110,8 @@ float getHeight(float x, float y)
   if (y>7999) y = 7999;
   x*=scale;
   y*=scale;
+  x-=0.5;
+  y-=0.5;
   float a = heights[int(y)*width+int(x)]*1000;
   float b = heights[int(y)*width+int(x)+1]*1000;
   float c = heights[(int(y)+1)*width+int(x)]*1000;
@@ -118,5 +120,5 @@ float getHeight(float x, float y)
   float fy = y-int(y);
   float e = a*(1-fx)+b*fx;
   float f = c*(1-fx)+d*fx;
-  return a;//e*(1-fy)+f*fy;
+  return e*(1-fy)+f*fy;
 }

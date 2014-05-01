@@ -37,7 +37,9 @@ int getFrameTime()
 /// Gets the time (in seconds) since the last frame, averaged over a number of frames
 float getFrameDiff()
 {
-  return 1.f/fps;
+  if (fps==0.f)
+    return 1;
+  return min(1.f,1.f/fps);
 }
 
 /// Gets the number of frames per second, on average
