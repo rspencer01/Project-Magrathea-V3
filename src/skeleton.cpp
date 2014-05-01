@@ -199,7 +199,7 @@ void Skeleton::addPt(glm::vec3 pos,glm::vec3 bns,glm::vec3 wgh)
 void Skeleton::Render(float ms)
 {
   theta += ms;
-  if (theta>frameTime)
+  if (theta>frameTime*0.8)
   {
     theta = 0;
     getNextAnimation();
@@ -223,7 +223,7 @@ void Skeleton::Render(float ms)
 void Skeleton::getNextAnimation()
 {
   currentFrame++;
-  currentFrame %= animation[animationName].size();
+  currentFrame %= animation[animationName].size()-1;
   for (int i = 0;i<numberOfChannels;i++)
   {
     *placesForAnimation[i] = animation[animationName][currentFrame][i];

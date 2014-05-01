@@ -19,6 +19,8 @@ Camera::Camera(glm::mat4* matrix, glm::vec4* position)
   // Remember the environment
   matrixData = matrix;
   positionData = position;
+  // What are we attaching to
+  attachment = NULL;
 }
 
 /// Modifys the game world transform to reflect the postion of the camera.
@@ -31,6 +33,11 @@ void Camera::Render()
   Right = glm::normalize(Right);
   UpVector = glm::normalize(UpVector);
   ViewDir = glm::normalize(ViewDir);
+
+  if (attachment!=NULL)
+  {
+    Position = attachment->getPosition() - 10.f*ViewDir;
+  }
 
   // Construct a matrix that transforms the object in the correct way
   *matrixData = glm::lookAt(Position,Position+ViewDir,UpVector);

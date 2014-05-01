@@ -248,3 +248,8 @@ void Object::updateObjectBO()
   glBindBuffer(GL_UNIFORM_BUFFER, objectBO);
   glBufferData(GL_UNIFORM_BUFFER, sizeof(objectData), &objectData, GL_DYNAMIC_DRAW);
 }
+
+glm::vec3 Object::getPosition()
+{
+  return position;
+}

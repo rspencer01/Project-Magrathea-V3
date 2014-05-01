@@ -9,6 +9,7 @@
 #define CAMERA_H
 class Camera;
 #include <magrathea.h>
+#include <object.h>
 #include <window.h>
 
 /// A class that renders the scene according to some camera position and rotation
@@ -55,6 +56,8 @@ class Camera
     /// Mutator for the camera viewing direction
     void setViewDirection(glm::vec3);
     void getInputFromWindow(Window*);
+    /// To what object is this camera attached
+    Object* attachment;
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include <avatar.h>
 #include <fstream>
 #include <game.h>
+#include <heightmap.h>
 using namespace std;
 
 Avatar::Avatar(glm::vec3 pos,Game* parent) : Object(pos,parent)
@@ -16,6 +17,12 @@ Avatar::Avatar(glm::vec3 pos,Game* parent) : Object(pos,parent)
 
 void Avatar::Render(float ms)
 {
+  ms = min (ms,1.f);
+  skeleton->setAnimationName("Run-M");
+  setPosition(position+glm::vec3(0.f,0.f,6.f)*ms);
+  position.y = getHeight(position.x,position.z);
+  setPosition(position);
+
   skeleton->Render(ms);  
   skeleton->pushAnimationData(objectData.boneMatrices);
 
@@ -25,7 +32,6 @@ void Avatar::Render(float ms)
   game->shaderManager->loadShader(shaderID);
   game->shaderManager->getCurrentShader()->setObjectData(objectBO);
   glBindVertexArray(VAO);
-  //glDrawArrays(GL_POINTS,0,numberOfPoints);
   glDrawElements(GL_TRIANGLES,numberOfTriangles*3,GL_UNSIGNED_INT,0);
 }
 

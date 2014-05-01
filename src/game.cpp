@@ -32,9 +32,9 @@ Game::Game()
   logi.log("New game");
   logi.log("Initialising Graphics");
   initGraphics();
-  //initNoise();
-  //terrain = new Terrain(glm::vec3(0),this);
-  person = new Avatar(glm::vec3(0),this);
+  initNoise();
+  terrain = new Terrain(glm::vec3(0),this);
+  person = new Avatar(glm::vec3(4000,0,4000),this);
   mouseCameraControl = false;
   currentGame = this;
   for (int i = 0;i<256;i++)keys[i] =false;
@@ -60,7 +60,7 @@ void Game::initGraphics()
   glPointSize(2);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-  glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+  glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
   initTextEngine();
   shaderManager = new ShaderManager(); 
@@ -82,12 +82,13 @@ void Game::run()
     char buffer[80]; sprintf(buffer,"Project Magrathea III (%.2f FPS : %.0fms)",fps,ms*1000);
     mainWindow->setTitle(buffer);
 
+
     if (mouseCameraControl)
       camera->getInputFromWindow(mainWindow);
     if (keys['W'])
-      camera->MoveForward(ms*2.f);
+      camera->MoveForward(ms*50.f);
     if (keys['S'])
-      camera->MoveForward(-ms*2.f);
+      camera->MoveForward(-ms*50.f);
 
     glfwPollEvents();
     mainWindow->setContext();
@@ -103,7 +104,7 @@ void Game::renderMainWindow(float ms)
   glClearColor(0.54,0.93,0.93,1.0);
   camera->Render();
   shaderManager->setFrameData();
-  //terrain->Render();
+  terrain->Render();
   person->Render(ms);
 }
 
@@ -116,6 +117,13 @@ void Game::key(int key, int scancode, int action, int mods)
       mouseCameraControl = !mouseCameraControl;
       if (mouseCameraControl)
         mainWindow->setMouseCentre();
+    }
+    if (key=='E')
+    {
+      if (camera->attachment==NULL)
+        camera->attachment = person;
+      else
+        camera->attachment = NULL;
     }
     if (key==GLFW_KEY_F5)
       shaderManager->reloadAll();

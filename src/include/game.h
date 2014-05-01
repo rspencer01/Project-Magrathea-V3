@@ -26,7 +26,7 @@ class Game
   private:
     /// Initialises OpenGL and the window
     void initGraphics();
-    /// Renders the status window
+    /// Renders the main window
     void renderMainWindow(float ms);
     /// The main window;
     Window* mainWindow;
@@ -34,8 +34,11 @@ class Game
     Camera* camera;
     /// A test region
     Terrain* terrain;
+    /// Does the mouse control the camera?
     bool mouseCameraControl;
+    /// Which keys are down
     bool keys[256];
+    /// The person
     Avatar* person;
   public:
     /// Creates a game instance and initialises all variables.
@@ -44,6 +47,7 @@ class Game
     void run();
     /// The shader manager
     ShaderManager* shaderManager;
+    /// A key event log
     void key(int,int,int,int);
 };
 

@@ -11,5 +11,5 @@
 
 /// Returns an array of heightmap data
 float* getHeightmapData(int w, int h);
-
+float getHeight(float,float);
 #endif

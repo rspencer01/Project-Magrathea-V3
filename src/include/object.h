@@ -44,11 +44,12 @@ typedef struct
 typedef struct
 {
   glm::mat4 transformMatrix;
+  glm::mat4 boneMatrices[64];
 } ObjectData;
 
 // Check that the above structs are the right size
 static_assert(sizeof(VertexDatum) == sizeof(GLfloat) * 16, "VertexDatum incorrect size");
-static_assert(sizeof(ObjectData) == sizeof(GLfloat) * 16, "ObjectData incorrect size");
+static_assert(sizeof(ObjectData) == sizeof(GLfloat) * (16+64*16), "ObjectData incorrect size");
 
 /// \brief An object is anything that occurs in the game space
 ///
@@ -130,6 +131,8 @@ class Object
     virtual ~Object();
   	/// Renders the Object to the screen
     virtual void Render();
+    /// Get the object position
+    glm::vec3 getPosition();
 };
 
 

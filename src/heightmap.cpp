@@ -4,6 +4,10 @@
 #include <log.h>
 #include <stdlib.h>
 
+int width,height;
+float scale;
+float* heights = NULL;
+
 float randf()
 {
   return rand()%10000/10000.f-0.5f;
@@ -44,14 +48,19 @@ void doErosion(int width, int height, float* values)
   }
 }
 
-float* getHeightmapData(int width, int height)
+float* getHeightmapData(int w, int h)
 {
+  width =w;height = h;
+  scale = w/8000.f;
   int seed = 1;
   srand(seed);
   logi.clog(LOG_COLOR_LIGHT_BLUE,"Constructing heightmap, seed %d",seed);
-  float* heights = new float[width*height];
+  if (heights!=NULL)
+    delete[] heights;
+  heights = new float[width*height];
+
   for (int i=0;i<(width)*(height);i++) heights[i] = 0;
-  heights[0] = 0;
+  heights[0] = 0.1;
   heights[width-1] = 0;
   heights[(height-1)*(width)] = 0.0;
   heights[(height-1)*(width)+height-1] = 0;
@@ -89,6 +98,25 @@ float* getHeightmapData(int width, int height)
     for (int j = 0; j<height;j++)
       heights[i*width+j] = 8*pow(abs((double)heights[i*width+j]),1.5)*0.7;
   doErosion(width,height,heights);
+
   return heights;
 }
 
+float getHeight(float x, float y)
+{
+  if (x<1) x = 1;
+  if (y<1) y = 1;
+  if (x>7999) x = 7999;
+  if (y>7999) y = 7999;
+  x*=scale;
+  y*=scale;
+  float a = heights[int(y)*width+int(x)]*1000;
+  float b = heights[int(y)*width+int(x)+1]*1000;
+  float c = heights[(int(y)+1)*width+int(x)]*1000;
+  float d = heights[(int(y)+1)*width+int(x)+1]*1000;
+  float fx = x-int(x);
+  float fy = y-int(y);
+  float e = a*(1-fx)+b*fx;
+  float f = c*(1-fx)+d*fx;
+  return a;//e*(1-fy)+f*fy;
+}

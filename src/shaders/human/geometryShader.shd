@@ -29,7 +29,7 @@ void main()
   {
   	gsNormal = vsNormal[i];
     gsColour = vsColour[i];
-    gl_Position = projectionMatrix * transformationMatrix *vsPosition[i];
+    gl_Position = projectionMatrix * transformationMatrix*objectMatrix *vsPosition[i];
     EmitVertex();
   }
   EndPrimitive();
