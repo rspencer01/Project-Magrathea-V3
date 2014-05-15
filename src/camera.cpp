@@ -37,7 +37,7 @@ void Camera::Render()
 
   if (attachment!=NULL)
   {
-    Position = attachment->getPosition() - followingDistance*ViewDir;
+    Position = (10.f*Position + (attachment->getPosition() - followingDistance*ViewDir))/11.f;
   }
 
   // Construct a matrix that transforms the object in the correct way

@@ -39,11 +39,12 @@ Game::Game()
   initGraphics();
   initNoise();
   terrain = new Terrain(glm::vec3(0),this);
-  person = new Avatar(glm::vec3(4010,0,4010),this);
+  person = new Avatar(glm::vec3(3010,0,4010),this);
   mouseCameraControl = false;
   currentGame = this;
   for (int i = 0;i<256;i++)keys[i] =false;
 }
+
 glm::vec2 oldMousePos;
 void Game::initGraphics()
 {
